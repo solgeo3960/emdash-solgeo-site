@@ -1,4 +1,14 @@
-# EmDash Starter Template (Cloudflare)
+# ソルジオ コーポレートサイト (EmDash on Cloudflare)
+
+solgeo.co.jp の WordPress テーマを EmDash (Astro) に移植したサイトです。
+`main` へのマージで Cloudflare Workers Builds が本番 (`emdash-solgeo-site` Worker) にデプロイします。
+初回セットアップとフォーム作成の手順は [MIGRATION.md](./MIGRATION.md) を参照してください。
+
+以下は元の EmDash Starter Template の説明です。
+
+---
+
+## EmDash Starter Template (Cloudflare)
 
 A general-purpose starting point for building sites with [EmDash](https://github.com/emdash-cms/emdash) on Cloudflare Workers. Includes posts, pages, categories, and tags with minimal styling -- designed as a base you can build on rather than a finished theme.
 
