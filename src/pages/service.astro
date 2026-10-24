@@ -1,0 +1,8 @@
+---
+import Base from "../layouts/Base.astro";
+import body from "../html/pages/service.html?raw";
+---
+
+<Base title="サービス一覧" description="これから中国語ホームページ、ランディングページを作成したい方、既存のホームページを中国語化したい方、既存の中国語HPが中国で動いているのか確かめたい方、中国からアクセスできないホームページを改修してほしい方、クライアントから中国語のホームページ依頼をお願いされているが、アドバイス業務をお探しの方。">
+	<Fragment set:html={body} />
+</Base>

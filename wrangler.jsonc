@@ -10,6 +10,23 @@
 			"database_name": "emdash-solgeo-site","database_id": "4ce7e8d2-1905-4ebf-a459-ace4976cda3f",
 		},
 	],
+	// Astro session storage, pinned to the namespace `wrangler deploy` auto-provisioned.
+	"kv_namespaces": [
+		{
+			"binding": "SESSION",
+			"id": "2f8463320842497da10ab847737cdb4d",
+		},
+	],
+	// `wrangler preview` (PR builds) only uses bindings listed here; production
+	// D1/R2 are deliberately not shared with previews.
+	"previews": {
+		"kv_namespaces": [
+			{
+				"binding": "SESSION",
+				"id": "2f8463320842497da10ab847737cdb4d",
+			},
+		],
+	},
 	"r2_buckets": [
 		{
 			"binding": "MEDIA",

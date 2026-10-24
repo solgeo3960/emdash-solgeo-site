@@ -3,30 +3,81 @@
 
 /// <reference types="emdash/locals" />
 
-import type { BylineSummary, ContentBylineCredit, TaxonomyTerm, PortableTextBlock } from "emdash";
+import type { BylineSummary, ContentBylineCredit, TaxonomyTerm } from "emdash";
+
+export interface PageSectionsTextBlockV1Block {
+  _type: "text_block";
+  _version: 1;
+  _key: string;
+  "tagline"?: string | null;
+  "title"?: string | null;
+  "subtitle"?: string | null;
+  "paragraphs"?: string | null;
+  "list"?: string | null;
+}
+
+export type PageSectionsTextBlockBlock = PageSectionsTextBlockV1Block;
+
+export interface PageSectionsFeatureGridV1Block {
+  _type: "feature_grid";
+  _version: 1;
+  _key: string;
+  "tagline"?: string | null;
+  "title"?: string | null;
+  "items"?: { "title"?: string | null; "text"?: string | null }[] | null;
+}
+
+export type PageSectionsFeatureGridBlock = PageSectionsFeatureGridV1Block;
+
+export interface PageSectionsBenefitsV1Block {
+  _type: "benefits";
+  _version: 1;
+  _key: string;
+  "title"?: string | null;
+  "intro"?: string | null;
+  "list"?: string | null;
+  "note"?: string | null;
+}
+
+export type PageSectionsBenefitsBlock = PageSectionsBenefitsV1Block;
+
+export interface PageSectionsHighlightV1Block {
+  _type: "highlight";
+  _version: 1;
+  _key: string;
+  "tagline"?: string | null;
+  "title"?: string | null;
+  "paragraphs"?: string | null;
+  "stats"?: { "label"?: string | null; "text"?: string | null }[] | null;
+  "button_label"?: string | null;
+  "button_href"?: string | null;
+}
+
+export type PageSectionsHighlightBlock = PageSectionsHighlightV1Block;
+
+export type PageSectionsBlock = PageSectionsTextBlockBlock | PageSectionsFeatureGridBlock | PageSectionsBenefitsBlock | PageSectionsHighlightBlock;
 
 export interface Page {
   id: string;
   slug: string | null;
   status: string;
   title: string;
-  content?: PortableTextBlock[];
-  createdAt: Date;
-  updatedAt: Date;
-  publishedAt: Date | null;
-  byline?: BylineSummary | null;
-  bylines?: ContentBylineCredit[];
-  terms?: Record<string, TaxonomyTerm[]>;
-}
-
-export interface Post {
-  id: string;
-  slug: string | null;
-  status: string;
-  title: string;
-  featured_image?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
-  content?: PortableTextBlock[];
+  parent_path?: string;
+  english_title?: string;
   excerpt?: string;
+  hero_title?: string;
+  hero_meta?: string;
+  hero_image?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown>; darkVariant?: { id: string; src?: string; alt?: string; caption?: string; width?: number; height?: number; filename?: string; mimeType?: string; blurhash?: string; dominantColor?: string; focalX?: number; focalY?: number; provider?: string; previewUrl?: string; meta?: Record<string, unknown> } };
+  hero_image_url?: string;
+  hero_image_srcset?: string;
+  hero_image_position?: string;
+  hero_overlay?: string;
+  intro_heading?: string;
+  intro_text?: string;
+  intro_cta_label?: string;
+  intro_cta_href?: string;
+  intro_info?: { "title"?: string | null; "text"?: string | null; "link"?: string | null; "link_label"?: string | null }[];
+  sections?: PageSectionsBlock[];
   createdAt: Date;
   updatedAt: Date;
   publishedAt: Date | null;
@@ -38,6 +89,5 @@ export interface Post {
 declare module "emdash" {
   interface EmDashCollections {
     pages: Page;
-    posts: Post;
   }
 }

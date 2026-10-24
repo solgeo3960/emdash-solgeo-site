@@ -1,0 +1,132 @@
+---
+/**
+ * Preloader + full-screen navigation from header.php.
+ *
+ * Menu items come from the EmDash "primary" menu. A top-level item with
+ * children becomes a drop-down; extra <li> classes can be set per item via
+ * "CSS classes" in the admin (e.g. "dsn-active"). The "title attribute" of a
+ * drop-down item is used as the label of its "back" row (falls back to the label).
+ */
+import type { Menu } from "emdash";
+
+interface Props {
+	menu: Menu | null;
+}
+
+const { menu } = Astro.props;
+const items = menu?.items ?? [];
+const pad = (n: number) => String(n).padStart(2, "0");
+const placeholder = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+---
+
+<!-- ========== Loading Page ========== -->
+<div class="preloader">
+	<span class="percent v-middle">0</span>
+	<span class="loading-text text-uppercase">Loading ...</span>
+	<div class="preloader-bar">
+		<div class="preloader-progress"></div>
+	</div>
+	<h1 class="title v-middle">
+		<span class="letter-stroke">SOLGEO</span>
+		<span class="text-fill">SOLGEO</span>
+	</h1>
+</div>
+<!-- ========== End Loading Page ========== -->
+
+<!-- ========== Menu ========== -->
+<div class="site-header dsn-load-animate dsn-container">
+	<div class="extend-container d-flex w-100 align-items-baseline justify-content-between align-items-end">
+		<div class="inner-header p-relative">
+			<div class="main-logo">
+				<a href="/" data-dsn="parallax">
+					<img class="light-logo" src={placeholder} data-dsn-src="/assets/img/logo.png" alt="" />
+					<img class="dark-logo" src={placeholder} data-dsn-src="/assets/img/logo-dark.png" alt="" />
+				</a>
+			</div>
+		</div>
+		<div class="menu-icon d-flex align-items-baseline">
+			<div class="text-menu p-relative  font-heading text-transform-upper">
+				<div class="p-absolute text-button">Menu</div>
+				<div class="p-absolute text-open">Open</div>
+				<div class="p-absolute text-close">Close</div>
+			</div>
+			<div class="icon-m" data-dsn="parallax" data-dsn-move="10">
+				<span class="menu-icon-line p-relative d-inline-block icon-top"></span>
+				<span class="menu-icon-line p-relative d-inline-block icon-center"></span>
+				<span class="menu-icon-line p-relative d-block icon-bottom"></span>
+			</div>
+		</div>
+		<nav class="accent-menu dsn-container main-navigation p-absolute  w-100  d-flex align-items-baseline ">
+			<div class="menu-cover-title">Menu</div>
+			<ul class="extend-container p-relative d-flex flex-column justify-content-center h-100">
+				{
+					items.map((item, i) => {
+						const hasChildren = item.children.length > 0;
+						const liClass = [item.cssClasses, hasChildren && !item.cssClasses?.includes("dsn-drop-down") ? "dsn-drop-down" : null]
+							.filter(Boolean)
+							.join(" ");
+						return (
+							<li class={liClass || undefined}>
+								<a href={item.url} target={item.target} class="user-no-selection">
+									<span class="dsn-title-menu">{item.label}</span>
+									<span class="dsn-meta-menu">{pad(i + 1)}</span>
+									<span class="dsn-bg-arrow" />
+								</a>
+								{hasChildren && (
+									<ul>
+										<li class="dsn-back-menu">
+											<img src={placeholder} data-dsn-src="/assets/img/left-chevron.svg" alt="" />
+											<span class="dsn-title-menu">{item.titleAttr || item.label}</span>
+										</li>
+										{item.children.map((child, j) => (
+											<li>
+												<a href={child.url} target={child.target}>
+													<span class="dsn-title-menu">{child.label}</span>
+													<span class="dsn-meta-menu">{pad(j + 1)}</span>
+												</a>
+											</li>
+										))}
+									</ul>
+								)}
+							</li>
+						);
+					})
+				}
+			</ul>
+			<div class="container-content  p-absolute h-100 left-60 d-flex flex-column justify-content-center">
+				<div class="nav__info">
+					<div class="nav-content">
+						<p class="title-line">Studio</p>
+						<p>
+							Kamiyama<br />
+							Ginowan City, Okinawa Prefecture
+						</p>
+					</div>
+					<div class="nav-content">
+						<p class="title-line">Contact</p>
+						<p class="links over-hidden">
+							<a href="tel:090-4560-7481" data-hover-text="090-4560-7481" class="link-hover">090-4560-7481</a>
+						</p>
+						<p class="links  over-hidden">
+							<a href="/contact" data-hover-text="Contact Form" class="link-hover">Contact Form</a>
+						</p>
+					</div>
+				</div>
+				<div class="nav-social nav-content">
+					<div class="nav-social-inner p-relative">
+						<p class="title-line">Follow us</p>
+						<ul>
+							<li>
+								<a href="https://www.facebook.com/okiweb.create" target="_blank" rel="nofollow">
+									Facebook.
+									<div class="icon-circle"></div>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+</div>
+<!-- ========== End Menu ========== -->
