@@ -94,3 +94,14 @@ If you want a designed template instead, switch to `blog`, `portfolio`, or `mark
 - Don't treat this as a finished design. The unstyled output is intentional; shipping it as-is looks unfinished because it is.
 - Don't add component libraries (Tailwind UI, shadcn, etc.) without considering what they bring with them. The template is small on purpose.
 - Don't recreate the blog template's three-column reading view here. If that's what you want, start from `blog`.
+
+## Solgeo corporate site (migrated from WordPress)
+
+The design is the Grida-based WordPress theme from `solgeo3960/solgeo-new_2026` (PR #1), ported to Astro.
+
+- `public/assets/` — theme CSS/JS/fonts/images, unchanged except `js/custom.js` (contact forms post to the EmDash Forms plugin).
+- `src/layouts/Base.astro` + `src/components/SiteHeader.astro` — header.php / footer.php. The navigation comes from the EmDash `primary` menu.
+- `src/components/ServicePage.astro` — template-parts/service-page.php. Renders entries of the `pages` collection at `/{parent_path}/{slug}/`.
+- `src/pages/{index,service,japan-web,aboutus,contact,privacy-policy,404}.astro` — pages whose markup lives in `src/html/pages/*.html` (rendered output of the PHP templates). Edit the HTML there.
+- `src/html/parts/*.html` — shared fragments. Some intentionally contain unbalanced tags (copied from the theme), so they are injected with `set:html`, not as Astro components.
+- `seed/seed.json` — schema, the 16 service/info pages, menu and redirects (`/ch-hp/` → `/service/ch-hp/`, `/about/` → `/aboutus/`).

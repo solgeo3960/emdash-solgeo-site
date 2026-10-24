@@ -1,13 +1,22 @@
 ---
+/**
+ * Site-wide layout ported from the WordPress theme (header.php + footer.php).
+ *
+ * The markup and asset paths mirror the original theme so the Grida/dsn-grid
+ * scripts in /public/assets keep working unchanged.
+ */
 import { getMenuWithCacheHint, getSiteSettingsWithCacheHint } from "emdash";
 import { EmDashHead, EmDashBodyStart, EmDashBodyEnd } from "emdash/ui";
 import { createPublicPageContext } from "emdash/page";
-import LiveSearch from "emdash/ui/search";
+import SiteHeader from "../components/SiteHeader.astro";
+import footerHtml from "../html/parts/footer.html?raw";
 import { resolveStarterSiteIdentity } from "../utils/site-identity";
 
 interface Props {
-	title: string;
-	pageTitle?: string | null;
+	/** Page title without the site name. Omit on the front page. */
+	title?: string | null;
+	/** Full <title>, used as-is (e.g. from getSeoMeta). */
+	fullTitle?: string | null;
 	description?: string | null;
 	image?: string | null;
 	canonical?: string | null;
@@ -15,8 +24,7 @@ interface Props {
 	content?: { collection: string; id: string; slug?: string | null };
 }
 
-const { title, pageTitle, description, image, canonical, content } =
-	Astro.props;
+const { title, description, image, canonical, content } = Astro.props;
 const [settingsResult, menuResult] = await Promise.all([
 	getSiteSettingsWithCacheHint(),
 	getMenuWithCacheHint("primary"),
@@ -26,25 +34,19 @@ if (Astro.cache?.enabled) {
 	Astro.cache.set(menuResult.cacheHint);
 }
 
-const { siteTitle, siteTagline, siteLogo } = resolveStarterSiteIdentity(
-	settingsResult.data,
-);
-const titleIncludesSiteName =
-	title === siteTitle ||
-	title.endsWith(` | ${siteTitle}`) ||
-	title.endsWith(` — ${siteTitle}`);
-const fullTitle = titleIncludesSiteName ? title : `${title} — ${siteTitle}`;
-const pageDescription = description ?? siteTagline;
-const menu = menuResult.data;
+const { siteTitle } = resolveStarterSiteIdentity(settingsResult.data);
+const fullTitle = Astro.props.fullTitle ?? (title ? `${title} - ${siteTitle}` : siteTitle);
+// WordPress permalinks end with a slash; keep canonical URLs in that form.
+const canonicalPath = Astro.url.pathname.endsWith("/") ? Astro.url.pathname : `${Astro.url.pathname}/`;
 
 const pageCtx = createPublicPageContext({
 	Astro,
 	kind: content ? "content" : "custom",
 	pageType: "website",
 	title: fullTitle,
-	pageTitle: pageTitle ?? title,
-	description: pageDescription,
-	canonical,
+	pageTitle: title ?? siteTitle,
+	description: description ?? null,
+	canonical: canonical ?? new URL(canonicalPath, Astro.site ?? Astro.url.origin).href,
 	image,
 	content,
 	siteName: siteTitle,
@@ -52,49 +54,47 @@ const pageCtx = createPublicPageContext({
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="ja">
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<title>{fullTitle}</title>
+
+		<!-- Font Google -->
+		<link
+			rel="preload"
+			href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&family=Poppins:wght@400;500;600;700&display=swap"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
+		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Karla:wght@400;500&family=Poppins:wght@400;500;600;700&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
+
+		<link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+		<link rel="icon" href="/assets/img/favicon.ico" type="image/x-icon" />
+
+		<link href="/assets/css/plugins.css" rel="stylesheet" />
+		<link href="/assets/css/style.css" rel="stylesheet" />
 		<EmDashHead page={pageCtx} />
 	</head>
-	<body>
+
+	<body class="v-dark dsn-effect-scroll dsn-cursor-effect dsn-ajax">
 		<EmDashBodyStart page={pageCtx} />
 
-		<header>
-			<nav>
-				<a href="/">
-					{
-						siteLogo ? (
-							<img
-								src={siteLogo.url}
-								alt={siteLogo.alt || siteTitle}
-								style="height:48px;width:auto;margin:-8px 0;display:block;"
-							/>
-						) : (
-							siteTitle
-						)
-					}
-				</a>
-				{
-					menu?.items.map((item) => (
-						<a
-							href={item.url}
-							target={item.target}
-							rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
-						>
-							{item.label}
-						</a>
-					))
-				}
-				<LiveSearch placeholder="Search..." collections={["posts", "pages"]} />
-			</nav>
-		</header>
+		<SiteHeader menu={menuResult.data} />
 
-		<main>
-			<slot />
-		</main>
+		<slot />
+
+		<Fragment set:html={footerHtml} />
+
+		<script is:inline src="/assets/js/jquery-3.1.1.min.js"></script>
+		<script is:inline src="/assets/js/plugins.min.js"></script>
+		<script is:inline src="/assets/js/dsn-grid.min.js"></script>
+		<script is:inline src="/assets/js/custom.js"></script>
 
 		<EmDashBodyEnd page={pageCtx} />
 	</body>

@@ -2,102 +2,314 @@
 	"$schema": "https://emdashcms.com/seed.schema.json",
 	"version": "1",
 	"meta": {
-		"name": "Starter",
-		"description": "A minimal EmDash starter with posts and pages",
-		"author": "EmDash"
+		"name": "株式会社ソルジオ",
+		"description": "中国x日本向けWeb集客・Web制作会社 ソルジオのコーポレートサイト",
+		"author": "SOLGEO"
 	},
 	"settings": {
-		"title": "My Site",
-		"tagline": "Built with EmDash"
+		"title": "株式会社ソルジオ | 中国x日本向けWeb集客・Web制作会社",
+		"tagline": "中国x日本向けWeb集客・Web制作会社"
 	},
-	"collections": [
+	"blockTypes": [
 		{
-			"slug": "posts",
-			"label": "Posts",
-			"labelSingular": "Post",
-			"urlPattern": "/posts/{slug}",
-			"supports": ["drafts", "revisions", "preview", "scheduling", "search", "seo"],
-			"fields": [
+			"slug": "text_block",
+			"label": "テキスト",
+			"currentVersion": 1,
+			"versions": [
 				{
-					"slug": "title",
-					"label": "Title",
-					"type": "string",
-					"required": true,
-					"searchable": true
-				},
-				{
-					"slug": "featured_image",
-					"label": "Featured Image",
-					"type": "image"
-				},
-				{
-					"slug": "content",
-					"label": "Content",
-					"type": "portableText",
-					"searchable": true
-				},
-				{
-					"slug": "excerpt",
-					"label": "Excerpt",
-					"type": "text"
+					"version": 1,
+					"fields": [
+						{
+							"slug": "tagline",
+							"label": "タグライン",
+							"type": "string"
+						},
+						{
+							"slug": "title",
+							"label": "見出し",
+							"type": "string"
+						},
+						{
+							"slug": "subtitle",
+							"label": "小見出し",
+							"type": "string"
+						},
+						{
+							"slug": "paragraphs",
+							"label": "本文（空行で段落を区切る）",
+							"type": "text"
+						},
+						{
+							"slug": "list",
+							"label": "箇条書き（1行1項目）",
+							"type": "text"
+						}
+					]
 				}
 			]
 		},
 		{
-			"slug": "pages",
-			"label": "Pages",
-			"labelSingular": "Page",
-			"urlPattern": "/{slug}",
-			"supports": ["drafts", "revisions", "preview", "search", "seo"],
-			"fields": [
+			"slug": "feature_grid",
+			"label": "3カラムカード",
+			"currentVersion": 1,
+			"versions": [
 				{
-					"slug": "title",
-					"label": "Title",
-					"type": "string",
-					"required": true,
-					"searchable": true
-				},
+					"version": 1,
+					"fields": [
+						{
+							"slug": "tagline",
+							"label": "タグライン",
+							"type": "string"
+						},
+						{
+							"slug": "title",
+							"label": "見出し",
+							"type": "string"
+						},
+						{
+							"slug": "items",
+							"label": "カード",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "title",
+										"label": "タイトル",
+										"type": "string"
+									},
+									{
+										"slug": "text",
+										"label": "本文",
+										"type": "text"
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "benefits",
+			"label": "メリット（中央寄せ）",
+			"currentVersion": 1,
+			"versions": [
 				{
-					"slug": "content",
-					"label": "Content",
-					"type": "portableText",
-					"searchable": true
+					"version": 1,
+					"fields": [
+						{
+							"slug": "title",
+							"label": "見出し",
+							"type": "string"
+						},
+						{
+							"slug": "intro",
+							"label": "リード文",
+							"type": "text"
+						},
+						{
+							"slug": "list",
+							"label": "箇条書き（1行1項目）",
+							"type": "text"
+						},
+						{
+							"slug": "note",
+							"label": "補足",
+							"type": "text"
+						}
+					]
+				}
+			]
+		},
+		{
+			"slug": "highlight",
+			"label": "ハイライト（本文＋数値）",
+			"currentVersion": 1,
+			"versions": [
+				{
+					"version": 1,
+					"fields": [
+						{
+							"slug": "tagline",
+							"label": "タグライン",
+							"type": "string"
+						},
+						{
+							"slug": "title",
+							"label": "見出し",
+							"type": "string"
+						},
+						{
+							"slug": "paragraphs",
+							"label": "本文（空行で段落を区切る）",
+							"type": "text"
+						},
+						{
+							"slug": "stats",
+							"label": "数値・ポイント",
+							"type": "repeater",
+							"validation": {
+								"subFields": [
+									{
+										"slug": "label",
+										"label": "ラベル",
+										"type": "string"
+									},
+									{
+										"slug": "text",
+										"label": "説明",
+										"type": "text"
+									}
+								]
+							}
+						},
+						{
+							"slug": "button_label",
+							"label": "ボタン文言",
+							"type": "string"
+						},
+						{
+							"slug": "button_href",
+							"label": "ボタンリンク",
+							"type": "string"
+						}
+					]
 				}
 			]
 		}
 	],
-	"taxonomies": [
+	"collections": [
 		{
-			"name": "category",
-			"label": "Categories",
-			"labelSingular": "Category",
-			"hierarchical": true,
-			"collections": ["posts"],
-			"terms": [
+			"slug": "pages",
+			"label": "固定ページ",
+			"labelSingular": "固定ページ",
+			"supports": [
+				"drafts",
+				"revisions",
+				"search",
+				"seo"
+			],
+			"fields": [
 				{
-					"slug": "general",
-					"label": "General"
+					"slug": "title",
+					"label": "タイトル",
+					"type": "string",
+					"required": true,
+					"searchable": true
 				},
 				{
-					"slug": "updates",
-					"label": "Updates"
-				}
-			]
-		},
-		{
-			"name": "tag",
-			"label": "Tags",
-			"labelSingular": "Tag",
-			"hierarchical": false,
-			"collections": ["posts"],
-			"terms": [
-				{
-					"slug": "starter",
-					"label": "Starter"
+					"slug": "parent_path",
+					"label": "親ページのパス（例: service → /service/スラッグ/）",
+					"type": "string"
 				},
 				{
-					"slug": "example",
-					"label": "Example"
+					"slug": "english_title",
+					"label": "左サイドの英語見出し（空ならタイトル）",
+					"type": "string"
+				},
+				{
+					"slug": "excerpt",
+					"label": "メタディスクリプション",
+					"type": "text"
+				},
+				{
+					"slug": "hero_title",
+					"label": "ヒーロー見出し（改行可）",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "hero_meta",
+					"label": "ヒーロー英字サブタイトル",
+					"type": "string"
+				},
+				{
+					"slug": "hero_image",
+					"label": "ヒーロー画像（アップロード時はこちらを優先）",
+					"type": "image"
+				},
+				{
+					"slug": "hero_image_url",
+					"label": "ヒーロー画像パス（既定）",
+					"type": "string"
+				},
+				{
+					"slug": "hero_image_srcset",
+					"label": "ヒーロー画像 srcset",
+					"type": "string"
+				},
+				{
+					"slug": "hero_image_position",
+					"label": "ヒーロー画像の位置（例: 50% 35%）",
+					"type": "string"
+				},
+				{
+					"slug": "hero_overlay",
+					"label": "ヒーロー画像の暗さ（0〜10）",
+					"type": "string"
+				},
+				{
+					"slug": "intro_heading",
+					"label": "イントロ見出し",
+					"type": "string"
+				},
+				{
+					"slug": "intro_text",
+					"label": "イントロ本文（空行で段落を区切る）",
+					"type": "text",
+					"searchable": true
+				},
+				{
+					"slug": "intro_cta_label",
+					"label": "イントロボタン文言",
+					"type": "string"
+				},
+				{
+					"slug": "intro_cta_href",
+					"label": "イントロボタンリンク",
+					"type": "string"
+				},
+				{
+					"slug": "intro_info",
+					"label": "イントロ右側の情報リスト",
+					"type": "repeater",
+					"validation": {
+						"subFields": [
+							{
+								"slug": "title",
+								"label": "見出し",
+								"type": "string"
+							},
+							{
+								"slug": "text",
+								"label": "本文",
+								"type": "string"
+							},
+							{
+								"slug": "link",
+								"label": "リンクURL",
+								"type": "string"
+							},
+							{
+								"slug": "link_label",
+								"label": "リンク文言",
+								"type": "string"
+							}
+						]
+					}
+				},
+				{
+					"slug": "sections",
+					"label": "セクション",
+					"type": "blocks",
+					"validation": {
+						"allowedTypes": [
+							"text_block",
+							"feature_grid",
+							"benefits",
+							"highlight"
+						]
+					}
 				}
 			]
 		}
@@ -105,128 +317,1425 @@
 	"menus": [
 		{
 			"name": "primary",
-			"label": "Primary Navigation",
+			"label": "グローバルメニュー",
 			"items": [
 				{
 					"type": "custom",
 					"label": "Home",
-					"url": "/"
+					"url": "/",
+					"cssClasses": "dsn-active dsn-drop-down"
 				},
 				{
 					"type": "custom",
-					"label": "Posts",
-					"url": "/posts"
+					"label": "Services For China",
+					"url": "#",
+					"titleAttr": "Services",
+					"children": [
+						{
+							"type": "custom",
+							"label": "中国語ホームページ制作",
+							"url": "/service/ch-hp/"
+						},
+						{
+							"type": "custom",
+							"label": "ホームページリニューアル",
+							"url": "/service/renewal/"
+						},
+						{
+							"type": "custom",
+							"label": "多言語ホームページ制作",
+							"url": "/service/multilingual/"
+						},
+						{
+							"type": "custom",
+							"label": "中国Webマーケティング",
+							"url": "/service/marketing-for-china/"
+						},
+						{
+							"type": "custom",
+							"label": "中国向けインバウンド",
+							"url": "/service/inbound/"
+						},
+						{
+							"type": "custom",
+							"label": "中国国内のサーバー",
+							"url": "/service/server/"
+						},
+						{
+							"type": "custom",
+							"label": "中国向けWordPressのプラグイン",
+							"url": "/service/wp/"
+						}
+					]
 				},
 				{
 					"type": "custom",
-					"label": "About",
-					"url": "/about"
+					"label": "Service for Japan",
+					"url": "#",
+					"children": [
+						{
+							"type": "custom",
+							"label": "日本向け制作を見る",
+							"url": "/japan-web/"
+						}
+					]
+				},
+				{
+					"type": "custom",
+					"label": "About China",
+					"url": "/about-china/",
+					"children": [
+						{
+							"type": "custom",
+							"label": "中国情報を見る",
+							"url": "/about-china/"
+						}
+					]
+				},
+				{
+					"type": "custom",
+					"label": "About Us",
+					"url": "/about/"
+				},
+				{
+					"type": "custom",
+					"label": "Contact",
+					"url": "/contact/"
 				}
 			]
 		}
 	],
-	"widgetAreas": [
+	"redirects": [
 		{
-			"name": "sidebar",
-			"label": "Sidebar",
-			"description": "Sidebar widget area",
-			"widgets": [
-				{
-					"type": "component",
-					"componentId": "core:search",
-					"title": "Search"
-				},
-				{
-					"type": "component",
-					"componentId": "core:categories",
-					"title": "Categories"
-				},
-				{
-					"type": "component",
-					"componentId": "core:recent-posts",
-					"title": "Recent Posts",
-					"props": {
-						"count": 5
-					}
-				}
-			]
+			"source": "/ch-hp",
+			"destination": "/service/ch-hp/",
+			"type": 301
+		},
+		{
+			"source": "/about",
+			"destination": "/aboutus/",
+			"type": 301
+		},
+		{
+			"source": "/homepage-main",
+			"destination": "/",
+			"type": 301
 		}
 	],
 	"content": {
 		"pages": [
 			{
-				"id": "about",
-				"slug": "about",
+				"id": "page-ch-hp",
+				"slug": "ch-hp",
 				"status": "published",
 				"data": {
-					"title": "About",
-					"content": [
+					"title": "中国語ホームページ制作",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国向け\nウェブサイト制作",
+					"hero_meta": "Chinese Website Production",
+					"hero_image_url": "/assets/img/project/project3/1-sm.jpg",
+					"hero_image_srcset": "/assets/img/project/project3/1.jpg 1800w,/assets/img/project/project3/1-sm.jpg 768w",
+					"hero_image_position": "",
+					"hero_overlay": "5",
+					"intro_heading": "中国の規制を前提に最適化を",
+					"intro_text": "中国ではGoogle関連サービスが使えないなど、日本とはインターネット環境が大きく異なります。ソルジオは中国の規制を前提に、中国から確実に表示されるウェブサイトを制作します。\n\n地図・フォント・計測タグなどの外部リソースを中国対応のものに置き換え、表示速度や導線まで最適化。中国のユーザーにストレスなく閲覧いただけるサイトに仕上げます。",
+					"intro_cta_label": "中国向けの制作を依頼する",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"title": "提供サービス",
+							"text": "中国向けHP制作 / ICP申請代行サービス",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "主な価値",
+							"text": "中国国内サーバー / 翻訳 / マーケティング",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "お問い合わせ",
+							"text": "",
+							"link": "/contact",
+							"link_label": "お問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strong Point",
+							"title": "サービスの特徴",
+							"items": [
 								{
-									"_type": "span",
-									"text": "This is the about page. Edit it in the admin panel or replace this template with your own design.",
-									"_key": "k1"
+									"title": "中国国内サーバー・規制対応",
+									"text": "インターネット環境の違いを理解し、中国からストレスなく閲覧できるサイトを制作します。フルデザインはもちろんテンプレートを用いた格安、短納期での対応も可能です。"
+								},
+								{
+									"title": "中国向け翻訳",
+									"text": "ネイティブスピーカーによる翻訳と日本側の最終チェックで、直訳ではない自然な中国語に仕上げます。現地で使われている言い回しや表記ルールにも対応します。"
+								},
+								{
+									"title": "ICP申請代行サービス",
+									"text": "中国国内のサーバーでサイトを公開する際に必要なICP備案の申請を、書類準備から手続きまで代行します。"
+								},
+								{
+									"title": "マーケティング",
+									"text": "百度SEOやWeChat・WeiboなどのSNS運用まで対応。サイト公開後も、中国のユーザーに見つけてもらうための集客を支援します。"
 								}
-							],
-							"_key": "k0"
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "中国向けサイトで成果を上げるために",
+							"subtitle": "",
+							"paragraphs": "日本向けサイトと同じ作り方で中国語サイトを制作すると、中国から表示できない・表示が極端に遅いといったトラブルが起こりがちです。ソルジオでは、中国からの表示確認を行いながら制作を進めます。\n\n中国国内サーバーの選定やICP備案など、公開に必要な手続きもまとめてご相談いただけます。\n\nサイト公開後は、百度へのインデックス登録や中国SNSでの発信まで支援し、中国市場での成果につなげます。",
+							"list": ""
 						}
 					]
 				}
-			}
-		],
-		"posts": [
+			},
 			{
-				"id": "post-1",
-				"slug": "welcome",
+				"id": "page-renewal",
+				"slug": "renewal",
 				"status": "published",
 				"data": {
-					"title": "Welcome",
-					"excerpt": "Your first post. Replace this with your own content.",
-					"content": [
+					"title": "ホームページリニューアル",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "ホームページ\nリニューアル",
+					"hero_meta": "Renewal Home Page",
+					"hero_image_url": "/assets/img/project/project5/1-sm.jpg",
+					"hero_image_srcset": "/assets/img/project/project5/1.jpg 1800w,/assets/img/project/project5/1-sm.jpg 768w",
+					"hero_image_position": "",
+					"hero_overlay": "5",
+					"intro_heading": "リニューアルで得られる価値",
+					"intro_text": "外国人のインバウンド市場の拡大、進む国際化、貴社のサービスは国際化が進んでいるでしょうか。ホームページも昔作ったままになっていないでしょうか。まずホームページをリニューアルし、最新のデザインを取り入れ、ホームページの多言語化をしてみませんか。\n\nリニューアルの最大のメリットはブランドイメージの向上です。ユーザーと企業を一番気軽につなぐHPを刷新したデザインで見せることにより貴社のブランドイメージの構築にご助力します。",
+					"intro_cta_label": "お問い合わせへ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
-								{
-									"_type": "span",
-									"text": "This is a starter post. The templates in this project show the basic patterns for querying and rendering EmDash content. Replace them with your own design.",
-									"_key": "k1"
-								}
-							],
-							"_key": "k0"
+							"title": "提供サービス",
+							"text": "ホームページリニューアル / 多言語サイト対応",
+							"link": "",
+							"link_label": ""
 						},
 						{
-							"_type": "block",
-							"style": "h2",
-							"children": [
-								{
-									"_type": "span",
-									"text": "What to do next",
-									"_key": "k3"
-								}
-							],
-							"_key": "k2"
+							"title": "主な価値",
+							"text": "ブランドイメージ向上・最新デザイン導入",
+							"link": "",
+							"link_label": ""
 						},
 						{
-							"_type": "block",
-							"style": "normal",
-							"children": [
+							"title": "お問い合わせ",
+							"text": "",
+							"link": "/contact",
+							"link_label": "お問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strong Point",
+							"title": "サービスの特徴",
+							"items": [
 								{
-									"_type": "span",
-									"text": "Open the admin panel to add content, or edit the Astro pages in src/pages to change how content is displayed.",
-									"_key": "k5"
+									"title": "世界の最新デザイン",
+									"text": "世界の最新のデザインを取集しており、常に最先端のデザインをご提供可能です。フルデザインはもちろんテンプレートを用いた格安、短納期での対応も可能です。"
+								},
+								{
+									"title": "テクノロジー刷新",
+									"text": "デザインはもちろんリニューアル前のHPではまだ使うことができなかった最新の技術、機能を利用して貴社のHPをリニューアルいたします。"
+								},
+								{
+									"title": "ネイティブ翻訳",
+									"text": "日本語をネイティブスピーカーにより翻訳し、日本語的な表現や固有名詞などをチェックするために外国語がわかる日本人によりダブルチェックを行いより自然な外国語でHPを作成します。"
 								}
-							],
-							"_key": "k4"
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "benefits",
+							"title": "ホームページをリニューアルすることにより得られること",
+							"intro": "ホームページをリニューアルすることにより得られることは多くあります。",
+							"list": "・デザインの刷新\n・ブランドイメージの向上\n・スマホでも見やすいレスポンシブ\n※現在スマホからのアクセスはどんなHPでも60%以上あるのが当たり前です。\n・貴社のサービスを整理して、最適な表示ができるため、ユーザービリティの向上\n・CMS導入によるWeb経験者ではなくても最新情報が更新可能など、",
+							"note": "コストはかかりますが、得られるメリットも多いはずです。特にブランドイメージの向上に関しては非常重要なのではないでしょうか。"
 						}
 					]
-				},
-				"taxonomies": {
-					"category": ["general"],
-					"tag": ["starter", "example"]
+				}
+			},
+			{
+				"id": "page-multilingual",
+				"slug": "multilingual",
+				"status": "published",
+				"data": {
+					"title": "多言語ホームページ制作",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "多言語\nウェブサイト制作",
+					"hero_meta": "Multilingual Website Production",
+					"hero_image_url": "/assets/img/project/project4/1-sm.jpg",
+					"hero_image_srcset": "/assets/img/project/project4/1.jpg 1800w,/assets/img/project/project4/1-sm.jpg 768w",
+					"hero_image_position": "",
+					"hero_overlay": "5",
+					"intro_heading": "多言語対応で世界に届ける",
+					"intro_text": "英語や中国語など複数言語を想定した情報構造で、運用しやすい多言語サイトを構築します。多言語対応のHPは、中国の規制に合わせたサイト制作を行います。\n\n多言語対応HPを制作する際に、最新の技術や機能を活用して多言語サイトを構築します。",
+					"intro_cta_label": "お問い合わせへ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [
+						{
+							"title": "提供サービス",
+							"text": "英語サイト・中国語サイト・多言語サイト制作",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "SEO/翻訳",
+							"text": "Google / Yahoo / 百度などの検索エンジンに対応",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "お問い合わせ",
+							"text": "",
+							"link": "/contact",
+							"link_label": "お問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strong Point",
+							"title": "サービスの特徴",
+							"items": [
+								{
+									"title": "多言語対応サイト制作",
+									"text": "最新の技術や機能を活用して多言語サイトを構築します。複数言語を想定した情報構造で、運用しやすい多言語サイトを構築します。"
+								},
+								{
+									"title": "言語別SEO対応",
+									"text": "言語別のSEOに対応したサイト制作を行います。中国百度やGoogleなどの検索エンジンに対応したサイト制作を行います。"
+								},
+								{
+									"title": "制作・翻訳・マーケティング",
+									"text": "制作から翻訳まで一貫して対応し、マーケティングを行います。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "多言語サイト制作について",
+							"subtitle": "",
+							"paragraphs": "多言語サイトを制作する際に、最新の技術や機能を活用して多言語サイトを構築します。\n\nGoogle検索エンジンが使えない中国では百度検索エンジンに対応したサイト制作を行います。\n\n中国の規制に合わせた多言語サイトを制作します。",
+							"list": ""
+						}
+					]
+				}
+			},
+			{
+				"id": "page-marketing-for-china",
+				"slug": "marketing-for-china",
+				"status": "published",
+				"data": {
+					"title": "中国Webマーケティング",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国Web\nマーケティング",
+					"hero_meta": "Marketing for China",
+					"hero_image_url": "/assets/img/project/project2/1-sm.jpg",
+					"hero_image_srcset": "/assets/img/project/project2/1.jpg 1800w,/assets/img/project/project2/1-sm.jpg 768w",
+					"hero_image_position": "50% 32%",
+					"hero_overlay": "5",
+					"intro_heading": "中国のマーケティング環境",
+					"intro_text": "Google・X（旧Twitter）・LINEが使えない中国では、日本と同じマーケティング手法は通用しません。検索は百度、SNSはWeChatやWeiboなど、中国独自のプラットフォームに合わせた施策が必要です。\n\nソルジオは中国のインターネット事情を踏まえ、プラットフォーム選びからコンテンツ制作・運用まで一貫して支援します。",
+					"intro_cta_label": "マーケティングを依頼する",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [
+						{
+							"title": "提供サービス",
+							"text": "SNS運用 / KOL運用 / コンテンツマーケティング",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "サービス内容",
+							"text": "コンテンツ制作から運用まで一貫して対応",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "お問い合わせ",
+							"text": "",
+							"link": "/contact",
+							"link_label": "お問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strong Point",
+							"title": "サービスの特徴",
+							"items": [
+								{
+									"title": "中国マーケティングプラットフォーム",
+									"text": "百度・WeChat・Weiboなど、中国で実際に使われているプラットフォームの中から、目的とターゲットに合ったものをご提案します。"
+								},
+								{
+									"title": "SNS運用とコンテンツマーケティング",
+									"text": "公式アカウントの開設から日々の投稿運用まで対応。KOL（インフルエンサー）とのタイアップも企画します。"
+								},
+								{
+									"title": "コンテンツ制作 / コンテンツマーケティング",
+									"text": "ネイティブスタッフが、中国のユーザーに響く記事・画像・動画を制作。検索とSNSの両方から集客できるコンテンツを作ります。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "中国マーケティングで成果を上げるために",
+							"subtitle": "",
+							"paragraphs": "中国では、検索エンジンとSNSを組み合わせた集客が欠かせません。百度での検索対策と、WeChatやWeiboでの情報発信を連動させることで、認知から問い合わせまでの導線をつくります。\n\nまた、中国の規制により日本で一般的な広告タグや計測ツールが使えない場合があります。中国でも計測できる環境を整えたうえで、数字をもとに施策を改善していきます。\n\nWeChatでは公式アカウントでの記事配信に加え、ミニプログラムと連携したキャンペーンも可能です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "highlight",
+							"tagline": "We Are Chinese Specialist",
+							"title": "中国専門家にお任せください",
+							"paragraphs": "中国のインターネット規制は日々変化しています。ソルジオは現地メンバーと連携しながら最新の情報を集め、その時点で効果的な施策をご提案します。\n\nコンテンツ制作から運用・改善まで、ワンストップでお任せください。",
+							"stats": [
+								{
+									"label": "SNS",
+									"text": "Wechat / Weibo / 百度など"
+								},
+								{
+									"label": "Campaign",
+									"text": "コンテンツ制作から運用まで一貫して対応"
+								}
+							],
+							"button_label": "お問い合わせフォームへ",
+							"button_href": "/contact"
+						}
+					]
+				}
+			},
+			{
+				"id": "page-inbound",
+				"slug": "inbound",
+				"status": "published",
+				"data": {
+					"title": "中国向けインバウンド",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国向け\nインバウンド対策",
+					"hero_meta": "Inbound Strategy for China",
+					"hero_image_url": "/assets/img/stories/storie-5.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "5",
+					"intro_heading": "China Insight",
+					"intro_text": "中国の旅行者に選ばれるためには、Webサイトの規制対応から検索・SNS・現地体験まで一貫した施策が欠かせません。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "中国向けインバウンドの基本",
+							"title": "Webサイトの中国対応が第一歩",
+							"subtitle": "",
+							"paragraphs": "自社サイトやLP、オウンドメディアを中国向けに公開する際は、中国のインターネット規制に対応した実装とスマホファーストなUXが必須です。\n\n公開後は実際に中国からアクセスし、表示崩れや読み込み遅延がないかを確認します。中国国内からのアクセスの約95％がスマートフォン経由と言われており、モバイル最適化が不可欠です。",
+							"list": "規制対象リソース（Google系、外部フォント、動画プラットフォームなど）の置き換え\n中国側での実機テストと表示速度計測\n多言語対応とスマホ前提の情報設計"
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "百度で見つけてもらうには",
+							"subtitle": "",
+							"paragraphs": "Googleが使えない中国では、検索エンジン「百度」へのインデックス登録とSEO対策が重要です。サイトマップ送信や通知用JSの設置など、最低限のセットアップを行いましょう。\n\n広告施策ではリスティング広告で顕在層を、インフィード広告で潜在層を獲得するのが効果的です。百度広告はユーザーデータが豊富なため、ターゲットを絞り込んだ配信が可能です。\n\n広告出稿によって百度でのインデックス速度を促進できるケースもあり、SEOと広告を両輪で進めるのが理想です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "観光地のブランディング",
+							"subtitle": "",
+							"paragraphs": "飛騨高山のように人口の5倍以上の訪日客を獲得している地域では、行政と民間が一体となって動画・パンフレット・多言語案内を整備しています。\n\n景観を壊さないよう現地のサインは最小限にとどめ、パンフレットやデジタルコンテンツで多言語対応するなど、オンライン/オフラインを組み合わせた施策が効果的です。\n\n近隣エリアと連携した周遊ルートや大都市からの直通バス整備など、アクセス改善もブランディングの一部として考えます。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "インバウンドで活用したいツール",
+							"items": [
+								{
+									"title": "百度インデックス/Analytics",
+									"text": "サイトマップ送信やクロール状況の確認、広告連携までまとめて管理し、検索導線を最適化します。"
+								},
+								{
+									"title": "大衆点評・百度地図",
+									"text": "飲食店や観光施設の口コミ・評価を最新化し、写真や説明を多言語で整備すると旅ナカの選択肢に入りやすくなります。"
+								},
+								{
+									"title": "TripAdvisorとの連携",
+									"text": "海外口コミが百度地図にも反映されるため、TripAdvisorでのレビュー獲得や多言語コメントの充実が重要です。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-server",
+				"slug": "server",
+				"status": "published",
+				"data": {
+					"title": "中国国内のサーバー",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "中国国内のサーバーなら問題なく表示できるのか？ 中国向けのHPや中国向けのLP、Webサービスをご検討の方はこの疑問に行き着く方が多いかと思います。 結果から申し上げるとNOになります。",
+					"hero_title": "中国国内サーバーの選び方",
+					"hero_meta": "Hosting Options for China",
+					"hero_image_url": "/assets/img/work-3.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "「中国サーバーなら安心」というわけではありません。規制対応、物理的なメリット、取得条件を整理します。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "サーバー選定の前に",
+							"title": "「中国サーバーなら表示できる」は誤解",
+							"subtitle": "",
+							"paragraphs": "結論から言うと、中国国内サーバーを使ってもインターネット規制に対応していなければページは表示されません。Google Map やYouTubeなど規制対象リソースを読み込んでいる限り、中国サーバーでもブロックされます。\n\n逆に日本国内サーバーでも、規制対象リソースを除去し代替手段を用意すれば、中国から問題なくアクセスできます。サーバーの場所よりも実装・運用面での対応が重要です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "中国サーバーのメリット",
+							"subtitle": "",
+							"paragraphs": "物理的に距離が近いため、同スペックであれば応答速度がわずかに向上します。ただし価格に対してスペックが低いケースも多く、選定には注意が必要です。\n\nICPを取得しているサーバーは資源百度（百度版サーチコンソール）に番号を提出でき、クロール優先度が上がると言われています。",
+							"list": "アクセス地点からの距離が近く遅延が減りやすい\n中国当局から認可済みの状態でビジネスを展開できる\n百度インデックスで優遇される可能性がある"
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "取得条件と注意点",
+							"subtitle": "",
+							"paragraphs": "中国サーバーを契約するには中国国内に法人があること（または中国籍個人であること）が基本条件です。日本法人のみの場合は物理的に契約が難しいケースが多く、パートナー企業との連携が必要です。\n\n都市をまたいで法人を移転する場合は旧都市のICPを取り消し、新都市で再取得する必要があるため、移転スケジュールは余裕を持たせましょう。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "サーバー構築・運用サポート",
+							"items": [
+								{
+									"title": "サーバー/クラウド選定",
+									"text": "中国・日本いずれのサーバーでも規制対象リソースの洗い出しと代替案を検討し、最適な構成をご提案します。"
+								},
+								{
+									"title": "ICP・ドメイン手続き",
+									"text": "中国法人を通じたサーバー契約、ICP申請、資源百度への登録など周辺手続きをワンストップで支援します。"
+								},
+								{
+									"title": "監視と改善",
+									"text": "中国からの表示監視、速度計測、CDN活用、Google/百度地図の切り替えなど、公開後のチューニングも継続的に対応します。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-wp",
+				"slug": "wp",
+				"status": "published",
+				"data": {
+					"title": "中国向けWordPressのプラグイン",
+					"parent_path": "service",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国向けでも使える\nWordPress運用体制",
+					"hero_meta": "China WordPress Support",
+					"hero_image_url": "/assets/img/work-3.jpg",
+					"hero_image_srcset": "/assets/img/work-3.jpg 1800w,/assets/img/work-6.jpg 992w",
+					"hero_image_position": "50% 45%",
+					"hero_overlay": "6",
+					"intro_heading": "WordPressの柔軟さを、中国環境でも損なわない。",
+					"intro_text": "WordPressは世界的に普及したCMSで、ブログだけでなくコーポレート/サービスサイトにも広く採用されています。しかし中国向けになると、テーマやプラグインが依存するGoogle関連APIの影響で読み込み遅延や表示崩れが起こりやすいのが課題です。\n\nソルジオでは中国向けプロジェクトで得た知見をもとに、Google Font/Map/Analyticsなどを中国国内でも利用できる代替CDNへ切り替える独自プラグインを開発。WordPressの利便性を保ったまま、安定した表示を実現します。",
+					"intro_cta_label": "導入相談をする",
+					"intro_cta_href": "/contact",
+					"intro_info": [
+						{
+							"title": "提供内容",
+							"text": "WordPress構築 / 速度対策 / 中国向けプラグイン導入",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "対応範囲",
+							"text": "企画・デザイン・実装・プラグイン改修・保守",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "サポート",
+							"text": "中国規制アップデート時の改修にも随時対応",
+							"link": "/contact",
+							"link_label": "問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "Question",
+							"title": "中国向けにWordPressは使えるのか？",
+							"subtitle": "",
+							"paragraphs": "WordPressは本来ブログシステムですが、その使いやすさから世界中の企業サイトで利用されています。ただし中国ではGoogle関連サービスがブロックされているため、テーマやプラグインが外部リソースを呼び出すと遅延や表示不可につながります。\n\n特にGoogle FontsやGoogle Maps、reCAPTCHAなどは高速なCMS体験を阻害し、最悪の場合ページ全体が読み込まれないケースもあります。中国向け制作では、これらリソースの置き換えが必須です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "feature_grid",
+							"tagline": "Solution",
+							"title": "ソルジオが提供する中国向けWPプラグイン",
+							"items": [
+								{
+									"title": "Google APIの自動置き換え",
+									"text": "Google Fonts/Maps/Analytics などを中国国内から利用可能なCDNへ切替。テーマを大きく改造せずに高速化します。"
+								},
+								{
+									"title": "追加スクリプト監視",
+									"text": "利用中プラグインが外部リソースを追加した場合も検出し、ホワイトリスト管理で安全に置換できます。"
+								},
+								{
+									"title": "継続アップデート",
+									"text": "中国の規制やAPI変更に合わせてプラグインを改修。長期運用でも安心して使えます。"
+								},
+								{
+									"title": "導入支援・検証",
+									"text": "本番前に中国現地からの表示確認を実施。既存サイトにも短期間で導入できるよう設計しています。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "highlight",
+							"tagline": "Plugin Features",
+							"title": "プラグイン導入で得られるメリット",
+							"paragraphs": "Google依存を排除しながら、WordPressテーマや既存運用フローはそのまま活かせます。\n\n解析タグ・フォーム・動画なども中国国内で表示できる構成へ切替し、CMSの改善サイクルを止めません。\n\n規制変更時はアップデート版を提供し、継続的に最適化できます。",
+							"stats": [
+								{
+									"label": "導入時間",
+									"text": "最短1週間で実装"
+								},
+								{
+									"label": "検証",
+									"text": "中国現地での実機検証付き"
+								},
+								{
+									"label": "サポート",
+									"text": "保守・改善プランあり"
+								},
+								{
+									"label": "互換性",
+									"text": "主要テーマ/プラグインに対応"
+								}
+							],
+							"button_label": "導入・改修を相談する",
+							"button_href": "/contact"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "text_block",
+							"tagline": "Future",
+							"title": "規制変化にも柔軟にアップデート",
+							"subtitle": "",
+							"paragraphs": "中国のインターネット規制は日々変わるため、今後も新しい制約が登場する可能性があります。当社は現地メンバーと連携しながら最新動向を監視し、必要に応じてプラグインの改修・代替策提案を行います。\n\n「WordPressを使いたいが、中国対応が心配」という方は、お気軽にご相談ください。既存サイトの診断から導入、保守までワンストップで支援します。",
+							"list": ""
+						}
+					]
+				}
+			},
+			{
+				"id": "page-icp",
+				"slug": "icp",
+				"status": "published",
+				"data": {
+					"title": "中国のICPとは？",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国のICPとは？",
+					"hero_meta": "Internet Content Provider License",
+					"hero_image_url": "/assets/img/about.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "中国でドメインやサーバーを使ってWebサイトやアプリを運用する際に求められる許可証がICPです。制度の基本と、ソルジオが提供する取得サポートをまとめました。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "中国のICP制度について",
+							"title": "Web公開に欠かせない「許可証」",
+							"subtitle": "",
+							"paragraphs": "ICP（Internet Content Provider）は中国工信部が管理するオンラインサービス向け許可証で、サーバーやドメインを使って情報を提供する場合は取得が義務づけられています。\n\n審査はドメインとサーバーの組み合わせ単位で行われ、承認された企業とドメインが紐づけられます。他社が取得済みのICP付ドメインを譲り受けることはできません。\n\n提出書類は都市ごとに異なり、営業許可証や担当者情報、サーバー設置先など詳細な資料が必要です。初回申請時はドメイン+サーバーをセットで用意します。",
+							"list": "経営性ICP（商用）: ECや決済、広告掲載など収益を伴うサービス向け\n非経営性ICP（情報提供）: 企業サイトやニュースサイトなど情報公開が主目的のサイト向け\n同一レジストラ内であれば、初回承認後に追加ドメインを比較的スムーズに登録可能"
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "よくある質問",
+							"subtitle": "",
+							"paragraphs": "ICPはドメイン単位で承認されるため、会社情報やドメインを追加・変更した場合は必ずプラットフォーム上で修正申請が必要です。\n\n中国サーバーを使っていても、Google Map やFacebookウィジェットなど規制対象のリソースを読み込んでいると表示できません。日本サーバーでも規制対応を徹底すれば閲覧できます。\n\n都市をまたいで法人を移転する場合は旧都市のICPを一度取り消し、新都市で再取得する必要があります（その期間はサイトが停止）。",
+							"list": "「ICPはサーバーなの？ドメインなの？」→ 実体はドメインに紐づく許可証だが、申請時はサーバー情報もセットで登録する。\n「取得済みドメインを譲渡できる？」→ ICPは企業に紐づくため譲渡不可。レジストラの実名認証もやり直しが必要。\n「表示が遅いのはICPのせい？」→ ICP未取得の中国サーバーでも開けないが、多くは規制対象スクリプトやフォントが原因。\n「経営性/非経営性の違いは？」→ 課金や会員制サービスを行うかどうかで求められるライセンスが変わる。"
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "ICP取得サポートメニュー",
+							"items": [
+								{
+									"title": "申請要件の整理",
+									"text": "営業許可証・身分証・サーバー情報など必要書類を洗い出し、都市ごとの提出方法とスケジュールを整理します。"
+								},
+								{
+									"title": "ドメイン/サーバー手続き",
+									"text": "レジストラでの実名認証、サーバー側の設定、ドメイン追加の申請など初回取得に必要な作業を代行します。"
+								},
+								{
+									"title": "更新・変更サポート",
+									"text": "法人移転や担当者変更時の差し替え申請、公安備案や資源百度への届け出まで継続運用をサポートします。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-net",
+				"slug": "net",
+				"status": "published",
+				"data": {
+					"title": "中国インターネット規制とは",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国インターネット\n規制とは",
+					"hero_meta": "Chinese Internet Regulation",
+					"hero_image_url": "/assets/img/work.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "7",
+					"intro_heading": "China Insight",
+					"intro_text": "Google や Facebook など主要サービスが規制対象となる中国では、日本とは異なるインターネット環境が形成されています。本ページでは規制の概要と、ソルジオが提供する対応メニューをご紹介します。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "中国のインターネット規制",
+							"title": "海外サービスが使えない理由",
+							"subtitle": "",
+							"paragraphs": "中国は日本と比べてインターネット規制が厳しく、Google、Facebook、Twitter、Instagram、LINE など日常的に使われるツールでも基本的に利用できません。\n\n代わりに検索では百度・360・搜狗、SNSでは微博（Weibo）やWeChat といった独自サービスが主流で、需要は日増しに拡大しています。\n\nこうした独自性が日本企業の中国展開を妨げ、現地でサイトを開くと「1分以上開かない」「レイアウトが崩れている」といったトラブルが起きます。",
+							"list": "Google/YouTube などの外部リソースは基本的にブロック対象\nフォント・地図・計測タグなども規制対象になるケースがある\n中国ユーザー向けに表示速度と導線を最適化する必要がある"
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "インターネット規制対応策",
+							"items": [
+								{
+									"title": "簡易診断",
+									"text": "中国から実際にアクセスした際の様子を動画で記録し、崩れや白抜けが起きていないかを確認する簡易レポートを提供します。"
+								},
+								{
+									"title": "HP・LPの規制対応改修",
+									"text": "Google フォントやマップ、翻訳機能など規制対象となる要素を洗い出し、中国の規制に沿った形で表示・速度を改善します。"
+								},
+								{
+									"title": "アドバイザリー業務",
+									"text": "代理店・制作パートナー向けに、中国のインターネット事情やフォント/画像使用の注意点などを踏まえた事前アドバイスと監修を行います。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "制作時の注意点",
+							"title": "トラブルを防ぐために",
+							"subtitle": "",
+							"paragraphs": "Google Map をはじめ、日本では当たり前の機能が中国では別サービスへの切り替えや開発者登録を求められるケースが多数存在します。\n\nフェイスブックのシェアマークやTwitterウィジェットなど、見えなくしてもプログラムが残っているだけでブロック要因になる場合があります。\n\nフォントライセンス違反や規制外リソースの埋め込みは罰金やサイト停止につながるため、実装段階での専門知識が不可欠です。",
+							"list": ""
+						}
+					]
+				}
+			},
+			{
+				"id": "page-sns",
+				"slug": "sns",
+				"status": "published",
+				"data": {
+					"title": "中国のSNSとは？",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国のSNSとは？",
+					"hero_meta": "Social Media Landscape",
+					"hero_image_url": "/assets/img/work-2.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "5",
+					"intro_heading": "China Insight",
+					"intro_text": "日本で馴染みのあるFacebook・Twitter・LINEは中国では規制対象。代わりにWeChatやWeibo、小红书（RED）、抖音（Douyin）など独自のSNSが生活・購買に浸透しています。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "中国のSNS環境",
+							"title": "独自プラットフォームが拡大",
+							"subtitle": "",
+							"paragraphs": "中国では独自の規制が敷かれているため、Facebook・Twitter・Instagram・LINEなど日本で日常的に使うSNSは基本的に利用できません。VPNを使えばアクセスできるケースもありますが、近年はVPN自体も規制対象になりつつあります。\n\nその結果、WeChat（微信）、Weibo（微博）、小红书（RED）、抖音（Douyin）、拼多多、Bilibiliといった中国独自のSNS/ソーシャルECが日増しに発展しています。オンライン決済やショート動画、ライブ配信、EC機能などもこれらのプラットフォーム内で完結するのが特徴です。",
+							"list": "WeChat（微信）: 13億人以上のユーザーを擁するメッセンジャー/決済/ミニプログラムを備えたスーパーアプリ\n抖音（Douyin）: 7億人以上のユーザーを誇るショート動画プラットフォーム、ライブ配信やEC機能も充実\nWeibo（微博）: 5億人以上のユーザー、マス広告やKOL活用に向いた拡散型SNS\n小红书（RED）: 3億人以上のユーザー、美容・ファッション中心のUGCプラットフォーム\nBilibili: Z世代を中心に人気の動画プラットフォーム、エンタメ・ゲーム・アニメコンテンツが豊富"
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "WeChat（微信）",
+							"subtitle": "",
+							"paragraphs": "中国で最も利用されているスーパーアプリで、月間アクティブユーザー数は13億人以上。チャット、公式アカウント配信、決済、ライブ配信、ミニプログラムなど多層の機能を提供します。\n\n公式アカウントでは記事配信やクーポン配布、接客チャットの自動化が可能。ミニプログラムを組み合わせることでEC・会員証・予約システムなども構築できます。2024年以降、AIチャットボット機能の強化や、ショート動画機能の統合が進んでいます。\n\nユーザーとの接点を一箇所に集約できるため、ブランドアカウントの設計やKPI設定を明確にしたうえで運用することが重要です。特にミニプログラムと公式アカウントの連携によるOMO（Online Merges with Offline）施策が注目されています。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "抖音（Douyin）",
+							"subtitle": "",
+							"paragraphs": "中国最大のショート動画プラットフォームで、月間アクティブユーザー数は7億人以上。TikTokの中国版として知られ、15秒〜3分のショート動画が中心です。\n\nライブ配信機能が充実しており、ライブコマース（ライブ配信での販売）が盛んに行われています。2024年以降、AI推薦アルゴリズムの精度向上により、ユーザーエンゲージメントがさらに高まっています。\n\nEC機能も統合されており、動画から直接購入できるショッピング機能が充実。KOL（キーオピニオンリーダー）とのタイアップや、ブランドアカウント運用によるファン獲得が効果的です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "Weibo（微博）・小红书（RED）・Bilibili",
+							"subtitle": "",
+							"paragraphs": "Weibo（微博）は月間アクティブユーザー数5億人以上のマイクロブログプラットフォーム。ニュース性の高い情報やKOL（インフルエンサー）の発信が流通するSNSで、マス広告とSNS拡散を掛け合わせたい企業に向いています。トレンドハッシュタグ機能を活用したキャンペーン展開が効果的です。\n\n小红书（RED）は月間アクティブユーザー数3億人以上、特に女性ユーザーが多いUGCプラットフォーム。美容・ファッションを中心に口コミ型コンテンツが集まり、店舗体験やレビュー記事を通じて購買を後押しします。ノート形式の投稿が特徴で、商品レビューやライフスタイル情報が豊富です。\n\nBilibiliはZ世代を中心に人気の動画プラットフォームで、月間アクティブユーザー数は3億人以上。エンタメ・ゲーム・アニメコンテンツが豊富で、エンゲージメントの高いコミュニティが形成されています。ブランドとのコラボレーションや、オリジナルコンテンツ制作によるブランディングが効果的です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b5",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "最新トレンド：ライブコマースとAI活用",
+							"subtitle": "",
+							"paragraphs": "2024年以降、中国のSNSマーケティングではライブコマース（ライブ配信での販売）が主流となっています。抖音や小红书、WeChatなど主要プラットフォームでライブ配信機能が強化され、リアルタイムでの商品紹介と購入が可能になっています。\n\nAI技術の活用も進んでおり、パーソナライズされたコンテンツ推薦、自動チャットボット、動画編集支援などが一般的になっています。特にKOLの選定やコンテンツ最適化において、AI分析ツールの活用が重要です。\n\nまた、ミニプログラムとEC機能の統合により、SNS内で完結する購買体験が標準化されています。ユーザーはSNSでコンテンツを見て、そのままアプリ内で購入・決済まで完結できるため、コンバージョン率が高いのが特徴です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b6",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "SNS活用メニュー",
+							"items": [
+								{
+									"title": "アカウント開設・運用設計",
+									"text": "WeChat公式アカウント、Weibo、小红书、抖音、Bilibiliなどの開設手続きから配信フロー、KPI設計まで支援します。各プラットフォームの特性に合わせた運用戦略を提案します。"
+								},
+								{
+									"title": "KOL/コンテンツ施策",
+									"text": "KOLタイアップ、UGC企画、小红书向けノート制作、抖音向けショート動画制作など、商材に合わせたコンテンツを企画・制作します。AI分析ツールを活用した効果的なKOL選定も支援します。"
+								},
+								{
+									"title": "ライブコマース・EC連携",
+									"text": "ライブ配信での販売企画、WeChatミニプログラム開発、キャンペーンLP、チャットボット開発など、SNS内完結型の購買体験を構築します。"
+								},
+								{
+									"title": "広告配信・データ分析",
+									"text": "各プラットフォームの広告配信代行、パフォーマンス分析、ROI最適化まで一貫してサポートします。AIを活用した効果測定と改善提案を行います。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-chinaseo",
+				"slug": "chinaseo",
+				"status": "published",
+				"data": {
+					"title": "中国SEO対策：百度",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "中国のSEO対策\n（百度・360・捜狗・神馬）",
+					"hero_meta": "China Search Strategy",
+					"hero_image_url": "/assets/img/work-2.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "Googleが使えない中国では百度を筆頭に複数の検索エンジンが存在します。市場シェアを踏まえた優先順位と、最低限押さえておきたいSEOメンテナンスをご紹介します。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "検索エンジンのシェア",
+							"title": "まずは現状を正しく理解",
+							"subtitle": "",
+							"paragraphs": "PC・スマートフォンいずれでも百度が60〜70%と圧倒的なシェアを維持しており、Haosou（360）、捜狗（Sougou）、神馬（Shenma）が続きます。Googleは中国国内ではほぼ利用できません。\n\n検索エンジンごとにインデックス方法や管理ツールが異なるため、上位の百度対策を軸に、ターゲットユーザーや業態に応じて他エンジンも補完的に押さえておくのが現実的です。",
+							"list": "PC: 百度 64.4%、Haosou 17.8%、Google 6.3%、捜狗 4.9%、Bing 4.4%\nスマホ: 百度 69.7%、神馬 22.7%、捜狗 4.9%、Haosou 1.6%、Google 0.5%\nスマホ経由の利用比率が急速に伸びているため、モバイル表示を前提にチューニングする"
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "百度SEOでやるべき3ステップ",
+							"subtitle": "",
+							"paragraphs": "①「百度資源」にサイトを登録し、サイト所有者の確認やクローラー設定を行います。法人情報やサイトURLを中国語で入力し、電話/SMS認証を通過させる必要があります。\n\n② サイトマップを提出し、ページ更新情報を百度に通知できる状態にします。中国語UIのみですが、Google Search Consoleに近い機能がそろっています。\n\n③ 自動通知用のJavaScriptを全ページに設置し、アクセスのたびにクロールを促します。合わせて手動送信機能を活用するとインデックス速度が向上します。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "その他エンジンへの展開",
+							"subtitle": "",
+							"paragraphs": "Haosou（360）や捜狗、神馬でもインデックス方法は基本的に「アカウント取得 → サイト登録 → サイトマップ送信 → JSによる通知」という流れです。それぞれ専用の管理ツールが用意されています。\n\n百度に比べると機能がシンプルなぶん、手動送信・サイトマップ提出の有無で掲載スピードが大きく変わります。日本語のままでは登録が弾かれるケースもあるため、中国語での記載と中国からの動作確認が必須です。",
+							"list": "360検索: PCシェア2位。アカウント取得時に中国の電話番号が必要になる場合がある\n捜狗: WeChatとの連携が強く、公式アカウントやミニプログラムと併用すると効果的\n神馬（Shenma）: スマホ特化型。モバイルページの読み込み速度とAMP/ミニプログラム連携が重要"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "ソルジオの支援内容",
+							"items": [
+								{
+									"title": "検索エンジン登録代行",
+									"text": "百度/360/捜狗/神馬などの管理ツールに代行で登録し、所有権確認・サイトマップ送信まで行います。"
+								},
+								{
+									"title": "技術チューニング",
+									"text": "規制対象リソースの除去、代替ライブラリの導入、JS通知タグの実装、ページ速度改善をまとめて対応します。"
+								},
+								{
+									"title": "レポート/改善提案",
+									"text": "インデックス状況や検索流入傾向をレポートし、記事制作や広告施策と組み合わせた改善プランをご提案します。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-seo-sg",
+				"slug": "seo-sg",
+				"status": "published",
+				"data": {
+					"title": "中国SEO対策：捜狗（SouGou）",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "捜狗（Sogou）\n検索エンジン対策",
+					"hero_meta": "Sogou Search Optimization",
+					"hero_image_url": "/assets/img/work-5.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "WeChatエコシステムと連携の強い検索エンジン「捜狗（Sogou）」にサイトを登録し、公式アカウントやミニプログラムと連動させるためのポイントをまとめました。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "捜狗とは？",
+							"title": "WeChatとの親和性が高い検索エンジン",
+							"subtitle": "",
+							"paragraphs": "捜狗はTencentグループが出資する検索エンジンで、WeChat公式アカウントの記事やミニプログラムと連携しやすいのが特徴です。スマホ検索シェアでは百度・神馬に次ぐ位置づけです。\n\n観光情報やSNS発信と組み合わせたい場合は、WeChat運用とセットで捜狗のインデックスを最適化しておくと効果が高まります。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "インデックス手順",
+							"subtitle": "",
+							"paragraphs": "① アカウント登録：Sogou搜索资源平台（https://zhanzhang.sogou.com/）にアクセスし、メールアドレスとSMSでアカウントを開設します。\n\n② サイト登録：サイトURLとカテゴリを登録し、HTMLファイル / Metaタグ / CNAME などで所有権を確認します。\n\n③ サイトマップ提出：XMLサイトマップまたはURL手動送信でクロール申請を行います。WeChat公式アカウントの記事URLも提出可能です。\n\n④ データ連携：公式アカウントIDやミニプログラムIDを紐付け、検索結果にアカウント情報が表示されるよう設定します。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "運用のコツ",
+							"subtitle": "",
+							"paragraphs": "捜狗のクローラーは中国語ページを優先するため、タイトル・ディスクリプション・構造化データを中国語で最適化します。\n\nWeChat記事やミニプログラムへの導線を設定すると検索結果の見栄えが向上します。ブランド名で検索した際に公式アカウントがサイドパネルに表示されるようチューニングするのが理想です。",
+							"list": "AMPや高速モバイルページを活用し、スマホでの描画速度を確保する\nWeChat限定クーポンや記事を検索流入と組み合わせ、再訪を促す\n定期的にURL手動送信とクロール統計を確認し、エラーを早期解消する"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "ソルジオのサポート",
+							"items": [
+								{
+									"title": "Sogou登録代行",
+									"text": "アカウント開設・所有権確認・サイトマップ送信を代行し、日本語での管理方法をまとめたドキュメントを提供します。"
+								},
+								{
+									"title": "WeChat連携設計",
+									"text": "公式アカウントやミニプログラムとの連携設定、記事テンプレートやCTA設計まで一括で支援します。"
+								},
+								{
+									"title": "レポート/改善",
+									"text": "インデックス推移とキーワード露出をレポートし、記事制作・広告施策と組み合わせた改善策をご提案します。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-seo-360",
+				"slug": "seo-360",
+				"status": "published",
+				"data": {
+					"title": "中国SEO対策：360",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "360検索（Haosou）\nSEO対策",
+					"hero_meta": "360 Search Optimization",
+					"hero_image_url": "/assets/img/work-4.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "PCシェア2位の検索エンジン「360（旧Haosou）」にサイトを正しく登録し、サイトマップや自動通知を通じてインデックスを促進する手順を整理しました。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "360検索とは？",
+							"title": "百度に次ぐPCシェアを持つ検索エンジン",
+							"subtitle": "",
+							"paragraphs": "360はセキュリティソフト企業「奇虎360」が提供する検索エンジンで、PC市場では百度に次ぐシェアを持ちます。スマホでは神馬や捜狗に後れを取っていますが、BtoBや情報検索で根強く利用されています。\n\n登録〜インデックスの流れは百度と似ていますが、管理画面やAPIが異なるため、専用のアカウントと設定が必要です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "基本の4ステップ",
+							"subtitle": "",
+							"paragraphs": "① アカウントを取得：360站长平台（https://zhanzhang.so.com/）でアカウントを開設し、SMSコードで認証します。\n\n② サイトを登録：URLとサイト名を中国語で登録し、HTMLファイル・Metaタグ・DNSのいずれかで所有権を確認します。\n\n③ サイトマップ提出：XMLサイトマップをアップロードし、更新頻度や優先度を設定して送信します。\n\n④ JavaScript通知：提供される推送用JSを全ページに設置し、アクセスのたびにインデックス要求を自動送信します。あわせて手動送信メニューから最新記事URLを送ると効果的です。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "360ならではの注意点",
+							"subtitle": "",
+							"paragraphs": "PC比率が高いエンジンなので、PC版レイアウトとモバイル版の双方が適切にクロールされるようリダイレクトやcanonicalを設定します。\n\nセキュリティソフトと連携しているため、マルウェア・広告スクリプトの検出が厳格です。外部タグを入れる際はホワイトリスト化されているか確認します。",
+							"list": "HTTPSと中国向けCDNを組み合わせ、応答速度を確保する\n規制対象のGoogleリソースが残っていないか定期的に診断\nサイトマップは中国語URL・英語URLどちらもUTF-8で統一する"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "サポートメニュー",
+							"items": [
+								{
+									"title": "360アカウント開設",
+									"text": "SMS認証や所有権確認の手順を代行し、管理画面を日本語で整理したガイドを提供します。"
+								},
+								{
+									"title": "技術実装",
+									"text": "サイトマップ生成・自動推送JS・手動送信スクリプトを実装し、Cron送信などの改善も対応します。"
+								},
+								{
+									"title": "運用レポート",
+									"text": "インデックス数やクローラー異常、ペナルティ警告をモニタリングし、改善提案までセットでご提供します。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-seo-sm",
+				"slug": "seo-sm",
+				"status": "published",
+				"data": {
+					"title": "中国SEO対策：神馬(shenma)",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "神馬（Shenma）\n検索エンジン対策",
+					"hero_meta": "Shenma Mobile Search",
+					"hero_image_url": "/assets/img/work-6.jpg",
+					"hero_image_srcset": "",
+					"hero_image_position": "",
+					"hero_overlay": "6",
+					"intro_heading": "China Insight",
+					"intro_text": "アリババ系が運営するスマホ特化型検索エンジン「神馬」。EC・旅行・生活情報での検索シェアが高く、モバイル最適化が何より重要です。",
+					"intro_cta_label": "お問い合わせ",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "text_block",
+							"tagline": "神馬とは？",
+							"title": "アリババ系のスマホ検索エンジン",
+							"subtitle": "",
+							"paragraphs": "神馬（Shenma）はアリババグループとUCWebが共同で運営するスマホ特化型の検索エンジンです。モバイル検索で20％超のシェアを持ち、ECや生活情報の検索に強みがあります。\n\n淘宝や支付宝といったアリババ系サービスとの連携が強く、EC関連のクエリでは百度より神馬が使われるケースもあります。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "登録〜インデックスの流れ",
+							"subtitle": "",
+							"paragraphs": "① アカウント登録：神馬站长平台（https://zhanzhang.sm.cn/）でアカウントを作成し、SMSによる本人確認を行います。\n\n② サイト登録：URL、サイト説明、カテゴリなどを中国語で入力し、HTMLファイル/Meta/DNSのいずれかで所有権を検証します。\n\n③ サイトマップ提出：モバイル向けのXMLサイトマップを送信し、クロール頻度や優先度を設定します。\n\n④ 推送JSの設置：提供される推送スクリプトを全ページに組み込み、アクセスのたびに最新URLを通知します。併せて手動送信ツールで重要なLPを登録しておきます。",
+							"list": ""
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "モバイル最適化のポイント",
+							"subtitle": "",
+							"paragraphs": "AMPや独自のモバイルテンプレートを活用し、1〜2秒で描画できる軽量ページを用意します。中国国内CDNを併用すると安定しやすくなります。\n\nECや予約サイトの場合、商品価格や在庫などの構造化データを中国語で記述すると、リッチスニペットとして表示されやすくなります。",
+							"list": "中国向けフォント/ライブラリに差し替え、規制対象のGoogleリソースを排除する\n淘宝や天猫の店舗ページと相互導線を作り、検索→ECの遷移をスムーズにする\n神馬のクローラーは頻繁にUAを変えるため、スマホ向けリダイレクトのルールをシンプルに保つ"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "feature_grid",
+							"tagline": "",
+							"title": "サポートメニュー",
+							"items": [
+								{
+									"title": "神馬アカウント開設",
+									"text": "SMS認証、所有権確認、サイトマップ送信までを代行し、運用ガイドを提供します。"
+								},
+								{
+									"title": "モバイル高速化",
+									"text": "中国CDNの導入、リソース圧縮、AMP/ミニプログラム連携などモバイル速度改善をまとめて実施します。"
+								},
+								{
+									"title": "モニタリング",
+									"text": "インデックス/クロール統計を定期的にレポートし、エラー発生時の復旧や最適化をサポートします。"
+								}
+							]
+						}
+					]
+				}
+			},
+			{
+				"id": "page-baidu_index",
+				"slug": "baidu_index",
+				"status": "published",
+				"data": {
+					"title": "百度インデックス送信（サイト登録）ツール",
+					"parent_path": "",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "百度インデックス\n登録代行サービス",
+					"hero_meta": "Baidu Index Submission",
+					"hero_image_url": "/assets/img/project/project6/1-sm.jpg",
+					"hero_image_srcset": "/assets/img/project/project6/1.jpg 1800w,/assets/img/project/project6/1-sm.jpg 768w",
+					"hero_image_position": "50% 32%",
+					"hero_overlay": "5",
+					"intro_heading": "百度の検索結果に表示されるように",
+					"intro_text": "中国ではGoogleが使えないため、検索エンジンは百度が主流です。Googleに表示されているサイトでも、百度の検索結果に表示されるとは限りません。\n\n中国のユーザーにサイトを見つけてもらうには、百度にサイトを登録し、インデックス（検索エンジンへの登録）を促す必要があります。ソルジオがその登録作業を代行します。",
+					"intro_cta_label": "サービス詳細を確認する",
+					"intro_cta_href": "#service-contact",
+					"intro_info": [
+						{
+							"title": "提供サービス",
+							"text": "百度インデックス登録代行サービス",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "料金",
+							"text": "登録するURL数に応じてお見積もり（1件から対応）",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "お問い合わせ",
+							"text": "",
+							"link": "/contact",
+							"link_label": "お問い合わせフォーム"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strong Point",
+							"title": "サービスの特徴",
+							"items": [
+								{
+									"title": "URL登録代行サービス",
+									"text": "中国語の管理画面での操作や所有者確認など、手間のかかる百度への登録作業をまとめて代行します。"
+								},
+								{
+									"title": "確実な登録・中国向けSEO",
+									"text": "登録後もインデックス状況を確認し、表示されない場合は原因を調べて対策します。"
+								},
+								{
+									"title": "中国向けサイト対応",
+									"text": "中国から表示できない要素が残っていると、インデックスされにくくなります。必要に応じてサイトの中国対応もあわせてご提案します。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "料金と登録について",
+							"subtitle": "",
+							"paragraphs": "料金は登録するURLの数によって異なります。まずはお気軽にご相談ください。",
+							"list": "URLは1件ずつでも、複数件まとめてでも登録できます\n百度の公式ツール「百度搜索资源平台」から登録します\nURLを登録してから検索結果に反映されるまで、1週間程度かかります"
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "",
+							"title": "中国向けサイト対応について",
+							"subtitle": "",
+							"paragraphs": "Google Map・Google Fontsなど中国で使えないサービスがサイトに含まれていると、表示が遅くなり、百度にも評価されにくくなります。\n\nソルジオでは中国からの表示確認を行い、必要な改修を含めて、百度に登録されやすいサイトづくりを支援します。",
+							"list": ""
+						}
+					]
+				}
+			},
+			{
+				"id": "page-jp-web",
+				"slug": "jp-web",
+				"status": "draft",
+				"data": {
+					"title": "日本向けWeb制作（クリエイティブ/リニューアル）",
+					"parent_path": "japan-web",
+					"english_title": "",
+					"excerpt": "",
+					"hero_title": "日本向けWeb制作\nクリエイティブ/リニューアル",
+					"hero_meta": "Japan Web Creative",
+					"hero_image_url": "/assets/img/work-2.jpg",
+					"hero_image_srcset": "/assets/img/work-2.jpg 1800w,/assets/img/work-5.jpg 1024w",
+					"hero_image_position": "50% 35%",
+					"hero_overlay": "5",
+					"intro_heading": "ブランドと事業の価値を、迷わず届く体験に変える。",
+					"intro_text": "ヒアリングで「誰に何を届けたいか」を整理し、情報設計・コピー・ビジュアル・UIを一貫して設計します。コーポレート/サービス/採用/LPなど幅広い制作で培った知見をベースに、“らしさ”を言語化して体験に落とし込みます。\n\nスピードだけでなく、公開後の改善や将来の多言語展開まで見据えた構成を提案。国内市場で信頼される品質と、海外展開も見据えた柔軟な設計を両立させます。",
+					"intro_cta_label": "日本向け制作について相談する",
+					"intro_cta_href": "/contact",
+					"intro_info": [
+						{
+							"title": "主な対応領域",
+							"text": "コーポレート / サービス / 採用 / LP / ブランドサイト",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "進め方",
+							"text": "要件整理 → 情報設計 → デザイン → 実装/運用",
+							"link": "",
+							"link_label": ""
+						},
+						{
+							"title": "お問い合わせ",
+							"text": "フォームから24時間受付",
+							"link": "/contact",
+							"link_label": "お問い合わせフォームへ"
+						}
+					],
+					"sections": [
+						{
+							"_version": 1,
+							"_key": "b1",
+							"_type": "feature_grid",
+							"tagline": "Our Strength",
+							"title": "日本市場で成果を出すための4つの強み",
+							"items": [
+								{
+									"title": "企画から運用まで一気通貫",
+									"text": "要件整理・情報設計・コピー・デザイン・構築を同じチームで担当。伝わり方と更新しやすさを両立します。"
+								},
+								{
+									"title": "ブランドの“らしさ”を体験化",
+									"text": "ヒアリングで抽出した価値を導線・ビジュアル・文字組みに落とし込み、世界観を損なわないUIに仕上げます。"
+								},
+								{
+									"title": "規制/多言語も見据えた設計",
+									"text": "将来的な中国・アジア展開も視野に、外部リソースやマルチサイト構成を最初から計画できます。"
+								},
+								{
+									"title": "改善運用を前提にした仕組み",
+									"text": "WordPressでの更新性や計測設計を整え、SEO/広告/コンテンツ施策と連動した改善サイクルを構築します。"
+								}
+							]
+						},
+						{
+							"_version": 1,
+							"_key": "b2",
+							"_type": "highlight",
+							"tagline": "Process",
+							"title": "戦略から運用まで伴走する制作プロセス",
+							"paragraphs": "STEP 01：ヒアリングで目的・ターゲット・競合を整理し、勝ち筋を定義します。\n\nSTEP 02：サイトマップ・ワイヤー・コピー案で情報設計を固め、伝える順番を設計します。\n\nSTEP 03：ビジュアルデザインとフロントエンド実装で世界観と体験を仕上げます。\n\nSTEP 04：公開後は計測データを見ながら改善。LP追加や多言語展開もサポートします。",
+							"stats": [
+								{
+									"label": "STEP 01",
+									"text": "要件整理・課題抽出"
+								},
+								{
+									"label": "STEP 02",
+									"text": "情報設計/コピー"
+								},
+								{
+									"label": "STEP 03",
+									"text": "デザイン/実装"
+								},
+								{
+									"label": "STEP 04",
+									"text": "運用改善"
+								}
+							],
+							"button_label": "制作フローを詳しく知る",
+							"button_href": "/contact"
+						},
+						{
+							"_version": 1,
+							"_key": "b3",
+							"_type": "text_block",
+							"tagline": "Services",
+							"title": "対応メニュー",
+							"subtitle": "日本向けWeb制作（企画・デザイン・開発）",
+							"paragraphs": "",
+							"list": "コーポレート/サービス/採用サイトの新規制作・リニューアル\nLP/キャンペーンサイトの企画・クリエイティブ・改善運用\nWordPress構築・カスタムテーマ開発・保守サポート\nSEO/コンテンツ企画・広告連携を見据えた導線最適化\n写真/ビジュアルディレクションやコピーライティング支援"
+						},
+						{
+							"_version": 1,
+							"_key": "b4",
+							"_type": "text_block",
+							"tagline": "Support",
+							"title": "公開後のカイゼンまで伴走",
+							"subtitle": "",
+							"paragraphs": "公開して終わりではなく、解析/ヒートマップ/検索データを基に改善施策を提案。必要に応じてLP追加やCMS改修、広告着地の作成まで継続的にサポートします。\n\n社内で更新しやすい運用マニュアルや更新ガイドも提供し、少人数チームでも品質を保ったまま改善できる体制を整えます。",
+							"list": ""
+						}
+					]
 				}
 			}
 		]

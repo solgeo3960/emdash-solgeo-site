@@ -1,0 +1,26 @@
+---
+/** Left side bar from template-parts/side-box-left.php */
+interface Props {
+	label: string;
+}
+const { label } = Astro.props;
+---
+
+<!-- ========== side box left ========== -->
+<div class="side-bar-full">
+	<div class="side-box-left ">
+		<div class="side-menu border-left border-right p-relative h-100 d-flex justify-content-center">
+			<div class="page-active">
+				<h2 class="text-uppercase">{label}</h2>
+			</div>
+		</div>
+	</div>
+	<div class="side-box-right text-stroke border-right text-uppercase">
+		<div class="text-inner over-hidden">
+			<div class="text-stroke-box">
+				<div class="text-stroke-inner">creative studio</div>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- ========== End side box left ========== -->

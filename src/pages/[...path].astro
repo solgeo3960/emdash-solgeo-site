@@ -1,0 +1,52 @@
+---
+/**
+ * Pages managed in the EmDash admin (collection "pages").
+ *
+ * URLs follow the old WordPress permalinks: an entry with parent path
+ * "service" and slug "ch-hp" lives at /service/ch-hp/. Requests for the
+ * same slug under another path are redirected to that URL.
+ */
+import { getEmDashEntry, getSeoMeta, decodeSlug, getSiteSettings } from "emdash";
+import Base from "../layouts/Base.astro";
+import ServicePage from "../components/ServicePage.astro";
+import { resolveStarterSiteIdentity } from "../utils/site-identity";
+
+const segments = (Astro.params.path ?? "").split("/").filter(Boolean);
+const slug = decodeSlug(segments.at(-1));
+
+if (!slug) {
+	return Astro.rewrite("/404");
+}
+
+const { entry: page, cacheHint } = await getEmDashEntry("pages", slug);
+
+if (!page) {
+	return Astro.rewrite("/404");
+}
+
+const parent = String(page.data.parent_path ?? "").replace(/^\/+|\/+$/g, "");
+const canonicalPath = `/${parent ? `${parent}/` : ""}${page.id}/`;
+if (`/${segments.join("/")}/` !== canonicalPath) {
+	return Astro.redirect(canonicalPath, 301);
+}
+
+if (Astro.cache?.enabled) Astro.cache.set(cacheHint);
+const { siteTitle } = resolveStarterSiteIdentity(await getSiteSettings());
+
+const seo = getSeoMeta(page, {
+	siteTitle,
+	siteUrl: Astro.url.origin,
+	path: canonicalPath,
+	titleSeparator: " - ",
+});
+---
+
+<Base
+	title={seo.ogTitle}
+	fullTitle={seo.title}
+	description={seo.description}
+	canonical={seo.canonical}
+	content={{ collection: "pages", id: page.data.id, slug }}
+>
+	<ServicePage data={page.data} />
+</Base>

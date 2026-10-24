@@ -1,0 +1,248 @@
+---
+/**
+ * Service / information page layout, ported from template-parts/service-page.php.
+ *
+ * All text comes from an entry in the EmDash "pages" collection. Multi-line
+ * text fields are split into paragraphs on blank lines and into list items
+ * on line breaks.
+ */
+import SideBoxLeft from "./SideBoxLeft.astro";
+import contactModalHtml from "../html/parts/contact-modal.html?raw";
+import ctaSectionHtml from "../html/parts/cta-section.html?raw";
+import tailHtml from "../html/parts/service-page-tail.html?raw";
+
+interface Props {
+	data: Record<string, any>;
+}
+
+const { data } = Astro.props;
+
+const PLACEHOLDER = "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==";
+
+const paragraphs = (text?: string | null) =>
+	(text ?? "")
+		.split(/\n\s*\n/)
+		.map((p) => p.trim())
+		.filter(Boolean);
+const lines = (text?: string | null) =>
+	(text ?? "")
+		.split("\n")
+		.map((l) => l.trim())
+		.filter(Boolean);
+const escapeHtml = (s: string) =>
+	s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+
+const heroTitle: string = data.hero_title || data.title || "";
+const heroTitleHtml = heroTitle.split("\n").map(escapeHtml).join("<br>");
+const uploaded = data.hero_image;
+const heroSrc: string =
+	(uploaded?.src as string | undefined) ??
+	(uploaded?.id ? `/_emdash/api/media/file/${uploaded.id}` : undefined) ??
+	data.hero_image_url ??
+	"";
+const heroSrcset: string = uploaded ? "" : data.hero_image_srcset || "";
+
+const introParagraphs = paragraphs(data.intro_text);
+const infoList: Array<Record<string, string>> = data.intro_info ?? [];
+const sections: Array<Record<string, any>> = data.sections ?? [];
+---
+
+<main class="main-root">
+	<SideBoxLeft label={data.english_title || data.title} />
+
+	{
+		heroSrc && (
+			<div class="p-fixed has-parallax-header v-dark-head background-main ">
+				<div class="p-absolute z-index-0 before-z-index h-100 w-100" data-overlay={data.hero_overlay || "5"} data-dsn-ajax="img">
+					<img
+						class="cover-bg-img"
+						src={PLACEHOLDER}
+						data-dsn-src={heroSrc}
+						data-dsn-srcset={heroSrcset || undefined}
+						data-dsn-position={data.hero_image_position || "50% 50%"}
+						alt={heroTitle.replace(/\n/g, "")}
+					/>
+				</div>
+			</div>
+		)
+	}
+
+	<div id="dsn-scrollbar">
+		<div class="inner-content">
+			<!-- ========== Header ========== -->
+			<header class="p-relative dsn-header-animation over-hidden h-v-100 v-dark-head border-bottom">
+				<div class="box-content dsn-container align-items-center ">
+					<div class="hero-content dsn-hero-parallax-title ">
+						<div class="has-box-mod p-relative move-circle" data-dsn="parallax" data-dsn-color="#313130">
+							<h1 class="title" data-dsn-ajax="title" set:html={heroTitleHtml} />
+						</div>
+
+						{
+							data.hero_meta && (
+								<div class="metas mt-25">
+									<span>{data.hero_meta}</span>
+								</div>
+							)
+						}
+					</div>
+				</div>
+			</header>
+			<!-- ========== End Header ========== -->
+
+			<div class="wrapper ">
+				<!-- ========== Intro Section ========== -->
+				<div class="intro-project dsn-container mb-section pt-section">
+					<div class="row">
+						<div class="col-lg-8">
+							<div class="intro-text p-relative">
+								<div class="inner">
+									{data.intro_heading && <h2 class="title-block border-section-bottom dsn-up">{data.intro_heading}</h2>}
+									{introParagraphs.map((p) => <p class="dsn-up mt-30 max-w750">{p}</p>)}
+									{
+										data.intro_cta_label && data.intro_cta_href && (
+											<a href={data.intro_cta_href} class="btn-arrow w-100 d-flex align-items-center justify-content-between mt-30">
+												<span>{data.intro_cta_label}</span>
+												<svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+													<path d="M3 13L17.17 13L13.59 16.59L15 18L21 12L15 6L13.59 7.41L17.17 11L3 11L3 13Z" />
+												</svg>
+											</a>
+										)
+									}
+								</div>
+							</div>
+						</div>
+
+						{
+							infoList.length > 0 && (
+								<div class="col-lg-4">
+									<ul class="p-relative project-info ms-mt-block">
+										{infoList.map((info) => (
+											<li>
+												{info.title && <h5>{info.title}</h5>}
+												{info.text && <span>{info.text}</span>}
+												{info.link && <a href={info.link}>{info.link_label || info.link}</a>}
+											</li>
+										))}
+									</ul>
+								</div>
+							)
+						}
+					</div>
+				</div>
+				<!-- ========== End Intro Section ========== -->
+
+				{
+					sections.map((section) => {
+						switch (section._type) {
+							case "feature_grid":
+								return (
+									<section class="dsn-container section-margin" data-dsn-animate="section">
+										{(section.tagline || section.title) && (
+											<div class="section-title">
+												{section.tagline && <span class="tag-heading background-main color-heading">{section.tagline}</span>}
+												{section.title && <h2 class="heading-h2">{section.title}</h2>}
+											</div>
+										)}
+										{section.items?.length > 0 && (
+											<div class="d-grid grid-md-3 grid-sm-1">
+												{section.items.map((item: Record<string, string>) => (
+													<div class="background-main box-padding radius">
+														{item.title && <h4 class="title-block mb-15">{item.title}</h4>}
+														{item.text && <p class="dsn-up mb-0">{item.text}</p>}
+													</div>
+												))}
+											</div>
+										)}
+									</section>
+								);
+
+							case "benefits":
+								return (
+									<section class="dsn-container p-relative section-padding background-section v-light" data-dsn-animate="section">
+										<div class="max-w750 m-auto d-flex flex-column justify-content-center text-center">
+											{section.title && <h4 class="title-block dsn-text mb-20">{section.title}</h4>}
+											{section.intro && <p class="dsn-up">{section.intro}</p>}
+											{lines(section.list).length > 0 && (
+												<ul class="dsn-up mt-20 text-start list-unstyled">
+													{lines(section.list).map((benefit) => (
+														<li class="mb-5">{benefit}</li>
+													))}
+												</ul>
+											)}
+											{section.note && <p class="dsn-up mt-20">{section.note}</p>}
+										</div>
+									</section>
+								);
+
+							case "highlight":
+								return (
+									<section class="dsn-container section-margin" data-dsn-animate="section">
+										<div class="row align-items-center">
+											<div class="col-lg-7">
+												{section.tagline && <span class="tag-heading background-main color-heading">{section.tagline}</span>}
+												{section.title && <h3 class="title-block mt-15 mb-20">{section.title}</h3>}
+												{paragraphs(section.paragraphs).map((p) => (
+													<p class="dsn-up">{p}</p>
+												))}
+											</div>
+											<div class="col-lg-5">
+												{section.stats?.length > 0 && (
+													<div class="d-grid grid-sm-2">
+														{section.stats.map((stat: Record<string, string>) => (
+															<div class="background-main box-padding text-center radius">
+																{stat.label && <h4 class="title-block mb-10">{stat.label}</h4>}
+																{stat.text && <p class="dsn-up mb-0">{stat.text}</p>}
+															</div>
+														))}
+													</div>
+												)}
+												{section.button_href && (
+													<a
+														href={section.button_href}
+														class="link-custom background-main image-zoom move-circle mt-30 d-inline-flex align-items-center"
+														data-dsn="parallax"
+													>
+														{section.button_label}
+													</a>
+												)}
+											</div>
+										</div>
+									</section>
+								);
+
+							case "text_block":
+							default:
+								return (
+									<section class="dsn-container section-margin" data-dsn-animate="section">
+										{(section.tagline || section.title || section.subtitle) && (
+											<div class="section-title">
+												{section.tagline && <span class="tag-heading background-main color-heading">{section.tagline}</span>}
+												{section.title && <h2 class="heading-h2">{section.title}</h2>}
+												{section.subtitle && <h3 class="title-block mt-10">{section.subtitle}</h3>}
+											</div>
+										)}
+										{paragraphs(section.paragraphs).map((p) => (
+											<p class="dsn-up">{p}</p>
+										))}
+										{lines(section.list).length > 0 && (
+											<ul class="dsn-up list-unstyled mt-20">
+												{lines(section.list).map((item) => (
+													<li class="mt-10">{item}</li>
+												))}
+											</ul>
+										)}
+									</section>
+								);
+						}
+					})
+				}
+
+				{sections.length > 0 && <Fragment set:html={ctaSectionHtml} />}
+			</div>
+		</div>
+	</div>
+
+	<Fragment set:html={contactModalHtml} />
+</main>
+
+<Fragment set:html={tailHtml} />
