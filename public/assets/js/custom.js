@@ -189,9 +189,9 @@
                                 showMessage("danger", data.message || "送信に失敗しました。時間をおいて再度お試しください。");
                                 return;
                             }
-                            showMessage("success", data.message || "お問い合わせを受け付けました。1営業日以内にご連絡いたします。");
-                            // empty the form
+                            // empty the form, then move to the thank-you page
                             $form[0].reset();
+                            window.location.href = "/contact/thanks/";
                         },
                         error: function (error) {
                             console.log(error);
