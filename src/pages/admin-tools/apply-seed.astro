@@ -1,0 +1,131 @@
+---
+/**
+ * One-off tool: write the Solgeo seed (seed/seed.json) into an existing database.
+ *
+ * Setup only applies the seed to an empty database. If a site was set up with
+ * a different seed (for example the built-in default with "Posts"/"About"),
+ * this page brings the schema, the "primary" menu, redirects and the 16 pages
+ * in line with seed/seed.json.
+ *
+ * Admins only (anyone else gets a 404). Runs in steps so that a single request
+ * stays well under the Cloudflare Workers per-request call limit:
+ *   step=schema   : settings, block types, collections/fields, menus, redirects (overwrite)
+ *   step=content  : pages in small batches (existing entries with the same slug are kept)
+ */
+import { applySeed, loadUserSeed } from "emdash/seed";
+
+export const prerender = false;
+
+const ADMIN_ROLE = 50;
+const BATCH_SIZE = 4;
+
+const { emdash, user } = Astro.locals as any;
+if (!user || Number(user.role) < ADMIN_ROLE || !emdash?.db) {
+	return Astro.rewrite("/404");
+}
+
+const seed = await loadUserSeed();
+const contentCollections = Object.entries(seed?.content ?? {}) as Array<[string, any[]]>;
+const contentItems = contentCollections.flatMap(([collection, entries]) =>
+	entries.map((entry) => ({ collection, entry })),
+);
+const totalBatches = Math.ceil(contentItems.length / BATCH_SIZE);
+
+let result: { ok: boolean; message: string; next: string | null } | null = null;
+
+if (Astro.request.method === "POST") {
+	const origin = Astro.request.headers.get("origin");
+	if (origin && origin !== Astro.url.origin) {
+		return new Response("Forbidden", { status: 403 });
+	}
+	const form = await Astro.request.formData();
+	const step = String(form.get("step") ?? "");
+	try {
+		if (!seed) throw new Error("seed/seed.json がビルドに含まれていません。");
+		if (step === "schema") {
+			const { content: _content, ...schemaOnly } = seed;
+			const r = await applySeed(emdash.db, schemaOnly, {
+				includeContent: false,
+				onConflict: "update",
+				storage: emdash.storage ?? undefined,
+			});
+			result = {
+				ok: true,
+				message: `スキーマ・メニュー・リダイレクトを反映しました(コレクション ${r.collections.created + r.collections.updated} / フィールド ${r.fields.created + r.fields.updated} / メニュー項目 ${r.menus.items} / リダイレクト ${r.redirects.created + r.redirects.updated + r.redirects.skipped})。`,
+				next: totalBatches > 0 ? "content-0" : null,
+			};
+		} else if (step.startsWith("content-")) {
+			const batch = Number(step.slice("content-".length));
+			const slice = contentItems.slice(batch * BATCH_SIZE, (batch + 1) * BATCH_SIZE);
+			const content: Record<string, any[]> = {};
+			for (const { collection, entry } of slice) (content[collection] ??= []).push(entry);
+			const r = await applySeed(
+				emdash.db,
+				{ version: seed.version, content },
+				{
+					includeContent: true,
+					onConflict: "skip",
+					storage: emdash.storage ?? undefined,
+					skipMediaDownload: true,
+				},
+			);
+			const nextBatch = batch + 1;
+			result = {
+				ok: true,
+				message: `ページ ${batch + 1}/${totalBatches} 回目: 作成 ${r.content.created} 件、既存のためスキップ ${r.content.skipped} 件。`,
+				next: nextBatch < totalBatches ? `content-${nextBatch}` : null,
+			};
+		} else {
+			throw new Error("不明なステップです。");
+		}
+	} catch (error) {
+		result = { ok: false, message: error instanceof Error ? error.message : String(error), next: null };
+	}
+}
+
+const nextStep = result ? result.next : "schema";
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="robots" content="noindex" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>サイトデータの反映</title>
+		<style>
+			body { font-family: system-ui, sans-serif; max-width: 640px; margin: 40px auto; padding: 0 16px; line-height: 1.7; }
+			.ok { color: #126b2f; } .ng { color: #b00020; }
+			button { font-size: 16px; padding: 8px 20px; }
+		</style>
+	</head>
+	<body>
+		<h1>サイトデータの反映</h1>
+		<p>
+			seed/seed.json の内容(グローバルメニュー、固定ページ {contentItems.length} 件、リダイレクト、ページ項目の定義)を、このサイトのデータベースに書き込みます。
+			メニューとリダイレクトは seed の内容で上書きされます。同じスラッグの固定ページが既にある場合は、そのページは変更しません。
+		</p>
+		{result && <p class={result.ok ? "ok" : "ng"}>{result.message}</p>}
+		{
+			nextStep ? (
+				<form method="post" id="seed-form">
+					<input type="hidden" name="step" value={nextStep} />
+					<button type="submit">{nextStep === "schema" ? "反映を開始する" : "続けて反映する"}</button>
+					{nextStep !== "schema" && <p>自動で続行します…</p>}
+				</form>
+			) : (
+				result?.ok && (
+					<p class="ok">
+						すべて完了しました。<a href="/">トップページ</a>でヘッダーのメニュー、<a href="/service/ch-hp/">/service/ch-hp/</a> などで下層ページを確認してください。
+					</p>
+				)
+			)
+		}
+		<p><a href="/_emdash/admin">管理画面へ戻る</a></p>
+		{
+			nextStep && nextStep !== "schema" && (
+				<script is:inline>document.getElementById("seed-form").submit();</script>
+			)
+		}
+	</body>
+</html>

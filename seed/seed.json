@@ -338,6 +338,11 @@
 						},
 						{
 							"type": "custom",
+							"label": "中国向けWordPressのプラグイン",
+							"url": "/service/wp/"
+						},
+						{
+							"type": "custom",
 							"label": "ホームページリニューアル",
 							"url": "/service/renewal/"
 						},
@@ -360,11 +365,6 @@
 							"type": "custom",
 							"label": "中国国内のサーバー",
 							"url": "/service/server/"
-						},
-						{
-							"type": "custom",
-							"label": "中国向けWordPressのプラグイン",
-							"url": "/service/wp/"
 						}
 					]
 				},
